@@ -1,0 +1,46 @@
+[versions]
+modVersion = "1.0.5"
+
+# https://fabricmc.net/develop/
+minecraft = "1.21.4"
+yarnMappings = "1.21.4+build.8"
+fabricLoader = "0.16.10"
+fabricApi = "0.116.1+1.21.4"
+
+fabricLanguageKotlin = "1.13.1+kotlin.2.1.10" # https://github.com/FabricMC/fabric-language-kotlin/releases
+
+kotlin = "2.1.10" # Match this to the one above
+loom = "1.9-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
+ksp = "2.1.10-1.0.29" #https://github.com/google/ksp/releases
+magik = "0.3.2" # https://github.com/GradleUp/magik/releases
+
+symbols = "1.0.0"
+mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
+apacheMath4 = "4.0-beta1" # https://mvnrepository.com/artifact/org.apache.commons/commons-math4-core
+apacheText = "1.13.0" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
+adventure = "6.2.0" # https://github.com/KyoriPowered/adventure-platform-mod/releases
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
+fabricLoaderJunit = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabricLoader" }
+fabricLanguageKotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabricLanguageKotlin" }
+fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
+adventureFabricRepack = { module = "net.kyori:adventure-platform-mod-shared-fabric-repack", version.ref = "adventure" }
+adventureFabric = { module = "net.kyori:adventure-platform-fabric", version.ref = "adventure" }
+
+mcdev = { module = "com.demonwav.mcdev:annotations", version.ref = "mcdev" }
+apacheMath4 = { module = "org.apache.commons:commons-math4-core", version.ref = "apacheMath4" }
+apacheText = { module = "org.apache.commons:commons-text", version.ref = "apacheText" }
+
+initProcessor = { module = "me.rime.symbols:init-processor", version.ref = "symbols" }
+initAnnotation = { module = "me.rime.symbols:init-annotation", version.ref = "symbols" }
+
+
+[bundles]
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+loom = { id = "fabric-loom", version.ref = "loom" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+magik = { id = "elect86.magik", version.ref = "magik"}

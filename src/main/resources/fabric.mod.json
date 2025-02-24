@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "rimelib",
+	"version": "${version}",
+	"name": "rimelib",
+	"description": "Kotlin utility library for Minecraft mods.",
+	"authors": [ "Rime" ],
+	"contact": { },
+	"license": "MIT",
+	"environment": "*",
+	"accessWidener": "rimelib.accesswidener",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "me.rime.rimelib.RimeLib::init",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"depends": {
+		"minecraft": "${minecraft_version}",
+		"fabricloader": ">=${loader_version}",
+		"fabric": "*",
+		"fabric-language-kotlin": ">=${flk_version}"
+	}
+}
