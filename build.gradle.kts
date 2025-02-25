@@ -112,9 +112,9 @@ tasks {
 publishing {
 	publications {
 		createGithubPublication {
-			groupId = "me.rime"
-			artifactId = "rimelib"
-			version = libs.versions.modVersion.get()
+			groupId = project.group as String
+			artifactId = project.base.archivesName.get()
+			version = project.version as String
 
 			from(components["java"])
 		}
