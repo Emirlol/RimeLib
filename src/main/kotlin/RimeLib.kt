@@ -12,7 +12,7 @@ object RimeLib {
 //		Initializer // Initialize features.
 	}
 
-	fun identifier(path: String): Identifier = Identifier.of(NAMESPACE, path)
+	fun identifier(path: String): Identifier = Identifier(NAMESPACE, path)
 
 	const val MOD_ID = "rimelib"
 	const val NAMESPACE = "rimelib"

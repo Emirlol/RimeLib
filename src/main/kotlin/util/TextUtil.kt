@@ -208,7 +208,6 @@ class StyleBuilder() {
 
 	fun build(): Style = Style(
 		color?.rgb?.let { TextColor.fromRgb(it) },
-		shadowColor?.rgb,
 		decorations and 0b10000u != 0.toUByte(),
 		decorations and 0b01000u != 0.toUByte(),
 		decorations and 0b00100u != 0.toUByte(),
