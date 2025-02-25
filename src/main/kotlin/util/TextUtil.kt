@@ -5,14 +5,12 @@ package me.rime.rimelib.util
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.item.ItemStack
 import net.minecraft.text.*
 import net.minecraft.text.HoverEvent.ItemStackContent
 import net.minecraft.util.Formatting
-import org.intellij.lang.annotations.Language
 import java.awt.Color
 import java.io.File
 import java.nio.file.Path
@@ -49,9 +47,6 @@ inline fun ClientPlayerEntity.sendText(text: Text) = sendMessage(text, false)
 
 @Environment(EnvType.CLIENT)
 inline fun ClientPlayerEntity.sendText(builder: TextBuilder.() -> Unit) = sendText(text(builder))
-
-@Environment(EnvType.CLIENT)
-inline fun ClientPlayerEntity.sendMiniMessage(@Language("XML") string: String) = sendMessage(MiniMessage.miniMessage().deserialize(string))
 
 /**
  * A low-overhead builder for creating [MutableText] instances.

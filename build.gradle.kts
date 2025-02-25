@@ -38,8 +38,6 @@ dependencies {
 	modImplementation(libs.fabricLanguageKotlin.get())
 	include(implementation(libs.apacheText.get())!!)
 	include(implementation(libs.apacheMath4.get())!!)
-	include(modImplementation(libs.adventureFabric.get())!!)
-	modCompileOnly(libs.adventureFabricRepack.get())
 	compileOnly(libs.mcdev.get())
 
 	compileOnly(libs.initAnnotation)

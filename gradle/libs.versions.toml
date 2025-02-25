@@ -18,7 +18,6 @@ symbols = "1.0.0"
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
 apacheMath4 = "4.0-beta1" # https://mvnrepository.com/artifact/org.apache.commons/commons-math4-core
 apacheText = "1.13.0" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
-adventure = "6.2.0" # https://github.com/KyoriPowered/adventure-platform-mod/releases
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -26,8 +25,6 @@ fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoa
 fabricLoaderJunit = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabricLoader" }
 fabricLanguageKotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabricLanguageKotlin" }
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
-adventureFabricRepack = { module = "net.kyori:adventure-platform-mod-shared-fabric-repack", version.ref = "adventure" }
-adventureFabric = { module = "net.kyori:adventure-platform-fabric", version.ref = "adventure" }
 
 mcdev = { module = "com.demonwav.mcdev:annotations", version.ref = "mcdev" }
 apacheMath4 = { module = "org.apache.commons:commons-math4-core", version.ref = "apacheMath4" }
@@ -35,7 +32,6 @@ apacheText = { module = "org.apache.commons:commons-text", version.ref = "apache
 
 initProcessor = { module = "me.rime.symbols:init-processor", version.ref = "symbols" }
 initAnnotation = { module = "me.rime.symbols:init-annotation", version.ref = "symbols" }
-
 
 [bundles]
 
