@@ -2,10 +2,10 @@
 modVersion = "1.0.5"
 
 # https://fabricmc.net/develop/
-minecraft = "1.21.4"
-yarnMappings = "1.21.4+build.8"
+minecraft = "1.20.5"
+yarnMappings = "1.20.5+build.1"
 fabricLoader = "0.16.10"
-fabricApi = "0.116.1+1.21.4"
+fabricApi = "0.97.8+1.20.5"
 
 fabricLanguageKotlin = "1.13.1+kotlin.2.1.10" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
