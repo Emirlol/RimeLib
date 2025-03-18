@@ -3,16 +3,12 @@
 package me.rime.rimelib.util
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.fabricmc.api.EnvType
-import net.fabricmc.api.Environment
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.text.*
 import net.minecraft.text.HoverEvent.ItemStackContent
 import net.minecraft.util.Formatting
-import org.intellij.lang.annotations.Language
 import java.awt.Color
 import java.io.File
 import java.nio.file.Path
@@ -44,14 +40,9 @@ inline fun text(builder: TextBuilder.() -> Unit) = TextBuilder().apply(builder).
  */
 inline fun text(initial: Text, builder: TextBuilder.() -> Unit) = TextBuilder(initial).apply(builder).build()
 
-@Environment(EnvType.CLIENT)
-inline fun ClientPlayerEntity.sendText(text: Text) = sendMessage(text, false)
+inline fun PlayerEntity.sendText(text: Text) = sendMessage(text, false)
 
-@Environment(EnvType.CLIENT)
-inline fun ClientPlayerEntity.sendText(builder: TextBuilder.() -> Unit) = sendText(text(builder))
-
-@Environment(EnvType.CLIENT)
-inline fun ClientPlayerEntity.sendMiniMessage(@Language("XML") string: String) = sendMessage(MiniMessage.miniMessage().deserialize(string))
+inline fun PlayerEntity.sendText(builder: TextBuilder.() -> Unit) = sendText(text(builder))
 
 /**
  * A low-overhead builder for creating [MutableText] instances.
@@ -74,7 +65,7 @@ inline fun ClientPlayerEntity.sendMiniMessage(@Language("XML") string: String) =
  * The unaryPlus (+) and plus (+) operators for [TextBuilder] always return self, so they can be chained.
  * But this also means any string concatenation has to be wrapped in parentheses.
  */
-class TextBuilder(private val children: MutableList<Text> = ObjectArrayList<Text>()) {
+class TextBuilder(private val children: MutableList<Text> = ObjectArrayList()) {
 	/**
 	 * Convenience constructor for editing an existing [Text] instance.
 	 * See the next constructor for more information.
