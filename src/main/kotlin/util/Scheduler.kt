@@ -19,10 +19,9 @@ typealias SyncTask = () -> Unit
 @AutoInit(-1)
 @Environment(EnvType.CLIENT)
 object Scheduler : ClientTickable() {
-	var currentTick: UInt = 0u
-	val LOGGER = LogUtil.createLogger(this)
-
-	var tasks: MutableList<Task> = ObjectLists.synchronize(ObjectArrayList<Task>())
+	private var currentTick: UInt = 0u
+	private val LOGGER = LogUtil.createLogger(this)
+	private var tasks: MutableList<Task> = ObjectLists.synchronize(ObjectArrayList())
 
 	override fun tick(client: MinecraftClient) {
 		val iterator = tasks.listIterator()
