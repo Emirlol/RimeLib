@@ -2,6 +2,7 @@ package me.rime.rimelib.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import kotlin.reflect.KClass
 
 object LogUtil {
 	/**
@@ -20,6 +21,20 @@ object LogUtil {
 	 * @param prefix The prefix to prepend to the name.
 	 */
 	fun createLogger(name: String, prefix: String = "RimeLib"): Logger = LoggerFactory.getLogger("$prefix | $name")
+
+	/**
+	 * Creates a logger with the name of the class.
+	 *
+	 * @param clazz The class to create the logger for.
+	 */
+	fun createLogger(clazz: KClass<*>): Logger = createLogger(clazz.simpleName!!)
+
+	/**
+	 * Creates a logger with the name of the class.
+	 *
+	 * @param clazz The class to create the logger for.
+	 */
+	fun createLogger(clazz: Class<*>): Logger = createLogger(clazz.simpleName)
 
 	/**
 	 * Creates a logger with the name of the class.
