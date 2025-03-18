@@ -1,14 +1,11 @@
 package me.rime.rimelib.util
 
 import it.unimi.dsi.fastutil.objects.ObjectLists
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.NbtComponent
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.resource.ResourceManager
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import org.jetbrains.annotations.UnmodifiableView
 
 /**
@@ -24,4 +21,4 @@ inline val ComponentHolder.customData: @UnmodifiableView NbtCompound get() = (co
  * @return The lore of the [ComponentHolder] as a list of [Text] objects.
  *         This is a read-only view of the lore, do not attempt to modify it.
  */
-inline val ComponentHolder.lore: @UnmodifiableView List<Text> get() = components[DataComponentTypes.LORE]?.lines ?: ObjectLists.emptyList<Text>()
+inline val ComponentHolder.lore: @UnmodifiableView List<Text> get() = components[DataComponentTypes.LORE]?.lines ?: ObjectLists.emptyList()
