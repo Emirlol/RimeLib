@@ -12,7 +12,7 @@ import org.slf4j.Logger
 @AutoInit(-2)
 object CoroutineUtil: Exitable() {
 	val globalJob = CoroutineScope(SupervisorJob() + CoroutineName("RimeLib"))
-	val LOGGER: Logger = LogUtil.createLogger("RimeLib CoroutineUtil")
+	private val LOGGER: Logger = LogUtil.createLogger("RimeLib CoroutineUtil")
 
 	override fun exit(client: MinecraftClient) {
 		LOGGER.info("Cancelling all coroutines.")
