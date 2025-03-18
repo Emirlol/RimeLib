@@ -1,5 +1,6 @@
 package me.rime.rimelib.util
 
+import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import me.rime.rimelib.util.ColorPalette.GREEN
 import me.rime.rimelib.util.ColorPalette.MAUVE
 import me.rime.rimelib.util.ColorPalette.PEACH
@@ -53,4 +54,6 @@ object ColorPalette { // The official java package for catppuccin colors sucks s
 	val BASE = Color(0x1e1e2e)
 	val MANTLE = Color(0x181825)
 	val CRUST = Color(0x11111b)
+
+	val ACCENTS = immutableArrayOf(ROSEWATER, FLAMINGO, PINK, MAUVE, RED, MAROON, PEACH, YELLOW, GREEN, TEAL, SKY, SAPPHIRE, BLUE, LAVENDER)
 }
