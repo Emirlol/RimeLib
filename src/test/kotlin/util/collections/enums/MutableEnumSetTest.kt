@@ -16,6 +16,7 @@ class MutableEnumSetTest {
 		val set = mutableEnumSetOf<TestEnum>().complemented() as JumboEnumSet<TestEnum>
 		set.removeAll(TestEnum.B, TestEnum.C, TestEnum.D, TestEnum.E)
 		set.addAll(TestEnum.F, TestEnum.G, TestEnum.H, TestEnum.I)
-		assert(set.containsAll(TestEnum.entries.toMutableSet().apply { removeAll(listOf(TestEnum.B, TestEnum.C, TestEnum.D, TestEnum.E)) }))
+		val expected = TestEnum.entries.toMutableSet().apply { removeAll(listOf(TestEnum.B, TestEnum.C, TestEnum.D, TestEnum.E)) }
+		assert(set.containsAll(expected))
 	}
 }

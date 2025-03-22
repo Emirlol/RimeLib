@@ -74,7 +74,7 @@ class JumboEnumSet<E : Enum<E>>(enumEntries: EnumEntries<E>) : MutableEnumSet<E>
 		val ordinal = element.ordinal
 		val index = ordinal.arrayIndex()
 		val oldElements = elements[index]
-		elements[index] = elements[index] or 1L shl ordinal
+		elements[index] = elements[index] or (1L shl ordinal)
 		val changed = oldElements != elements[index]
 		if (changed) size++
 		return changed
