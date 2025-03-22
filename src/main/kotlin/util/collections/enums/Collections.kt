@@ -114,24 +114,24 @@ inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntrie
  *
  * @throws IllegalArgumentException If the enum type [E] has more than 64 elements.
  */
-inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableJumboEnumSet] for the given enum type [E] with the given elements.
  */
-inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableRegularEnumSet] for the given enum type [E] with the given elements.
  *
  * @throws IllegalArgumentException If the enum type [E] has more than 64 elements.
  */
-inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableJumboEnumSet] for the given enum type [E] with the given elements.
  */
-inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 //   endregion Typed
 
 // endregion EnumSets
