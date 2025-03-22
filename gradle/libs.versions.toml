@@ -7,11 +7,11 @@ yarnMappings = "1.21.4+build.8"
 fabricLoader = "0.16.10"
 fabricApi = "0.116.1+1.21.4"
 
-fabricLanguageKotlin = "1.13.1+kotlin.2.1.10" # https://github.com/FabricMC/fabric-language-kotlin/releases
+fabricLanguageKotlin = "1.13.2+kotlin.2.1.20" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
-kotlin = "2.1.10" # Match this to the one above
-loom = "1.9-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
-ksp = "2.1.10-1.0.29" #https://github.com/google/ksp/releases
+kotlin = "2.1.20" # Match this to the one above
+loom = "1.10-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
+ksp = "2.1.20-1.0.31" #https://github.com/google/ksp/releases
 magik = "0.3.2" # https://github.com/GradleUp/magik/releases
 
 symbols = "1.0.0"

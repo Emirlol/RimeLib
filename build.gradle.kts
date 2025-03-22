@@ -1,4 +1,3 @@
-
 import magik.createGithubPublication
 import magik.github
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -96,6 +95,7 @@ tasks {
 	withType<KotlinCompile>().configureEach {
 		compilerOptions {
 			jvmTarget = JvmTarget.fromTarget(targetJavaVersion.toString())
+			freeCompilerArgs.add("-Xsuppress-warning=NOTHING_TO_INLINE")
 		}
 	}
 
