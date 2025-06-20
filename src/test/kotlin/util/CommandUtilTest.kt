@@ -3,48 +3,29 @@ package util
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.tree.ArgumentCommandNode
 import com.mojang.brigadier.tree.CommandNode
-import me.rime.rimelib.RimeLib
-import me.rime.rimelib.util.literalClient
-import me.rime.rimelib.util.literalServer
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
+import me.ancientri.rimelib.RimeLib
+import me.ancientri.rimelib.util.command.command
 import net.minecraft.command.CommandSource
 import net.minecraft.server.command.CommandManager
+import net.minecraft.server.command.ServerCommandSource
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class CommandUtilTest {
 	@Test
-	fun clientTest() {
-		val a = ClientCommandManager.literal(RimeLib.NAMESPACE)
-			.then(
-				ClientCommandManager.literal("example")
-					.then(ClientCommandManager.literal("subcommand"))
-					.then(ClientCommandManager.argument("subcommand2", StringArgumentType.word()))
-			).build()
-		val b = literalClient(RimeLib.NAMESPACE) {
-			literal("example") {
-				literal("subcommand") {}
-				argument("subcommand2", StringArgumentType.word()) {}
-			}
-		}.build()
-		// compare map elements
-		assertTrue(compareCommands(a, b))
-	}
-
-	@Test
-	fun serverTest() {
+	fun test() {
 		val a = CommandManager.literal(RimeLib.NAMESPACE)
 			.then(
 				CommandManager.literal("example")
 					.then(CommandManager.literal("subcommand"))
 					.then(CommandManager.argument("subcommand2", StringArgumentType.word()))
 			).build()
-		val b = literalServer(RimeLib.NAMESPACE) {
+		val b = command<ServerCommandSource>(RimeLib.NAMESPACE) {
 			literal("example") {
-				literal("subcommand") {}
-				argument("subcommand2", StringArgumentType.word()) {}
+				literal("subcommand")
+				argument("subcommand2", StringArgumentType.word())
 			}
-		}.build()
+		}
 		// compare map elements
 		assertTrue(compareCommands(a, b))
 	}

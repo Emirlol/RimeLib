@@ -1,15 +1,16 @@
-package me.rime.rimelib.ui
+package me.ancientri.rimelib.ui
 
-import me.rime.rimelib.ui.base.LayoutDirection
-import me.rime.rimelib.ui.base.Padding
-import me.rime.rimelib.ui.base.ParentWidget
-import me.rime.rimelib.ui.base.WidgetBuilder
-import me.rime.rimelib.ui.base.WidgetBuilder.Companion.growChildren
-import me.rime.rimelib.ui.base.WidgetBuilder.Companion.positionChildren
-import me.rime.rimelib.ui.base.WidgetBuilder.Companion.shrinkChildren
-import me.rime.rimelib.util.LogUtil
-import me.rime.rimelib.util.TextBuilder
-import me.rime.rimelib.util.profiled
+import me.ancientri.rimelib.RimeLib
+import me.ancientri.rimelib.ui.base.LayoutDirection
+import me.ancientri.rimelib.ui.base.Padding
+import me.ancientri.rimelib.ui.base.ParentWidget
+import me.ancientri.rimelib.ui.base.WidgetBuilder
+import me.ancientri.rimelib.ui.base.WidgetBuilder.Companion.growChildren
+import me.ancientri.rimelib.ui.base.WidgetBuilder.Companion.positionChildren
+import me.ancientri.rimelib.ui.base.WidgetBuilder.Companion.shrinkChildren
+import me.ancientri.rimelib.util.profiled
+import me.ancientri.rimelib.util.text.TextBuilder
+import me.ancientri.rimelib.util.text.text
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 
@@ -53,7 +54,7 @@ abstract class Screen(
 		}
 	}
 
-	constructor(titleBuilder: TextBuilder.() -> Unit) : this(TextBuilder().apply(titleBuilder).build())
+	constructor(titleBuilder: TextBuilder.() -> Unit) : this(text(titleBuilder))
 
 	/**
 	 * This is only public because it needs to be access by the game. You don't need to override this method.
@@ -82,6 +83,6 @@ abstract class Screen(
 	}
 
 	companion object {
-		val LOGGER = LogUtil.createLogger(Screen::class)
+		val LOGGER = RimeLib.loggerFactory.createLogger(Screen::class)
 	}
 }

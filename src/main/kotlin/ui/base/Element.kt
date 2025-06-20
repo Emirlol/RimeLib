@@ -1,4 +1,4 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 /**
  * Represents a UI element that can receive input events.

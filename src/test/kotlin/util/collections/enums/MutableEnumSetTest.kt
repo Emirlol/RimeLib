@@ -1,7 +1,7 @@
 package util.collections.enums
 
-import me.rime.rimelib.util.collections.enums.mutableEnumSetOf
-import me.rime.rimelib.util.collections.enums.set.mutable.JumboEnumSet
+import me.ancientri.rimelib.util.collections.enums.mutableEnumSetOf
+import me.ancientri.rimelib.util.collections.enums.set.mutable.JumboEnumSet
 import org.junit.jupiter.api.Test
 
 class MutableEnumSetTest {

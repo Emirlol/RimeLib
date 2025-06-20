@@ -1,8 +1,8 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import me.rime.rimelib.util.LogUtil
+import me.ancientri.rimelib.RimeLib
 
 class WidgetBuilder {
 	private val stack = ObjectArrayList<Widget>()
@@ -32,7 +32,7 @@ class WidgetBuilder {
 	}
 
 	companion object {
-		private val LOGGER = LogUtil.createLogger(WidgetBuilder::class)
+		private val LOGGER = RimeLib.loggerFactory.createLogger(WidgetBuilder::class)
 
 		// Shrink children first, then shrink self so everything is at its smallest
 		// Note that the root widget is the screen, and it can't shrink so it'll effectively only shrink its children

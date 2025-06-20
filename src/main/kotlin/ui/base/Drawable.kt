@@ -1,4 +1,4 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 import net.minecraft.client.gui.DrawContext
 

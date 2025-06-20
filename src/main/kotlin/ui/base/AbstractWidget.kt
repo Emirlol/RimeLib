@@ -1,4 +1,4 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.client.gui.DrawContext

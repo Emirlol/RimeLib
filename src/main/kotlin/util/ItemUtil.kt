@@ -1,4 +1,4 @@
-package me.rime.rimelib.util
+package me.ancientri.rimelib.util
 
 import it.unimi.dsi.fastutil.objects.ObjectLists
 import net.minecraft.component.ComponentHolder

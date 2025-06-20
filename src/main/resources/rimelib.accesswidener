@@ -3,3 +3,7 @@ accessWidener v2 named
 # Constructors
 accessible method net/minecraft/text/MutableText <init> (Lnet/minecraft/text/TextContent;Ljava/util/List;Lnet/minecraft/text/Style;)V
 accessible method net/minecraft/text/Style <init> (Lnet/minecraft/text/TextColor;Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lnet/minecraft/text/ClickEvent;Lnet/minecraft/text/HoverEvent;Ljava/lang/String;Lnet/minecraft/util/Identifier;)V
+accessible method net/minecraft/component/ComponentChanges$Type <init> (Lnet/minecraft/component/ComponentType;Z)V
+
+# Classes
+accessible class net/minecraft/component/ComponentChanges$Type

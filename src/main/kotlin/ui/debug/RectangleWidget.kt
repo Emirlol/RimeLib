@@ -1,8 +1,8 @@
-package me.rime.rimelib.ui.debug
+package me.ancientri.rimelib.ui.debug
 
-import me.rime.rimelib.ui.base.*
+import me.ancientri.rimelib.ui.base.*
+import me.ancientri.rimelib.util.color.Color
 import net.minecraft.client.gui.DrawContext
-import java.awt.Color
 
 data class RectangleWidget(
 	override var ewidth: ElementSize,
@@ -16,7 +16,7 @@ data class RectangleWidget(
 	override var positioning: Positioning = Positioning.RELATIVE
 
 	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-		context.fill(x, y, x + ewidth.getValue(), y + eheight.getValue(), color.rgb)
+		context.fill(x, y, x + ewidth.getValue(), y + eheight.getValue(), color.value)
 		if (children.isNotEmpty()) {
 			for (child in children) {
 				if (child is Drawable) child.render(context, mouseX, mouseY, delta)

@@ -1,9 +1,9 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
-import me.rime.rimelib.ui.Screen
-import me.rime.rimelib.util.client
+import me.ancientri.rimelib.ui.Screen
+import me.ancientri.rimelib.util.client
 
 /**
  * Wrapper around an integer that represents the size of an element. This can be either height or width.

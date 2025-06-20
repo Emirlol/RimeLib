@@ -12,7 +12,7 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "me.rime.rimelib.RimeLib::init",
+				"value": "me.ancientri.rimelib.RimeLib::init",
 				"adapter": "kotlin"
 			}
 		]

@@ -1,14 +1,13 @@
-package me.rime.rimelib.ui.debug
+package me.ancientri.rimelib.ui.debug
 
 import com.danrusu.pods4k.immutableArrays.ImmutableArray
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import me.rime.rimelib.ui.AbstractScreen
-import me.rime.rimelib.ui.Screen
-import me.rime.rimelib.ui.base.*
-import me.rime.rimelib.util.ColorPalette
-import me.rime.rimelib.util.ColorUtil.withAlpha
-import me.rime.rimelib.util.LogUtil
-import me.rime.rimelib.util.text
+import me.ancientri.rimelib.RimeLib
+import me.ancientri.rimelib.ui.AbstractScreen
+import me.ancientri.rimelib.ui.Screen
+import me.ancientri.rimelib.ui.base.*
+import me.ancientri.rimelib.util.color.ColorPalette
+import me.ancientri.rimelib.util.text.text
 import net.minecraft.client.gui.DrawContext
 import kotlin.math.sin
 
@@ -55,6 +54,6 @@ class DebugScreen : Screen("example text".text, padding = Padding(0), childGap =
 	override var y: Int = 0
 
 	companion object {
-		val LOGGER = LogUtil.createLogger(DebugScreen::class)
+		val LOGGER = RimeLib.loggerFactory.createLogger(DebugScreen::class)
 	}
 }

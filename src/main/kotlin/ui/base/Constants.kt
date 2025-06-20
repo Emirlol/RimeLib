@@ -1,4 +1,4 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 object Constants {
 	const val LEFT_MOUSE_BUTTON = 0

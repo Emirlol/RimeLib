@@ -1,6 +1,6 @@
-package me.rime.rimelib.util.collections.enums.set.mutable
+package me.ancientri.rimelib.util.collections.enums.set.mutable
 
-import me.rime.rimelib.util.collections.enums.set.immutable.ImmutableRegularEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.immutable.ImmutableRegularEnumSet
 import kotlin.enums.EnumEntries
 
 /**

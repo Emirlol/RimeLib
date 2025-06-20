@@ -1,13 +1,14 @@
-package me.rime.rimelib.util
+package me.ancientri.rimelib.util
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import it.unimi.dsi.fastutil.objects.ObjectLists
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.rime.rimelib.util.Scheduler.AsynchronousTask.Companion.runAsyncTask
-import me.rime.rimelib.util.Scheduler.SynchronousTask.Companion.runSyncTask
-import me.rime.rimelib.util.events.ClientTickable
-import me.rime.symbols.init.AutoInit
+import me.ancientri.rimelib.RimeLib
+import me.ancientri.rimelib.util.Scheduler.AsynchronousTask.Companion.runAsyncTask
+import me.ancientri.rimelib.util.Scheduler.SynchronousTask.Companion.runSyncTask
+import me.ancientri.rimelib.util.events.ClientTickable
+import me.ancientri.symbols.init.AutoInit
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.MinecraftClient
@@ -20,47 +21,55 @@ typealias SyncTask = () -> Unit
 @Environment(EnvType.CLIENT)
 object Scheduler : ClientTickable() {
 	private var currentTick: UInt = 0u
-	private val LOGGER = LogUtil.createLogger(this)
+	private val LOGGER = RimeLib.loggerFactory.createLogger(this)
 	private var tasks: MutableList<Task> = ObjectLists.synchronize(ObjectArrayList())
 
 	override fun tick(client: MinecraftClient) {
-		val iterator = tasks.listIterator()
 		synchronized(tasks) {
+			val iterator = tasks.listIterator()
 			while (iterator.hasNext()) {
 				val task = iterator.next()
 				if (task.ticks > currentTick) continue
+
 				task.execute()
 				iterator.remove()
-				if (task.cyclicDelay > 0u) iterator.add(task)
+
+				if (task.cyclicDelay > 0u) {
+					val nextExecutionTick = currentTick + task.cyclicDelay
+					when (task) {
+						is AsynchronousTask -> iterator.add(task.copy(nextExecutionTick))
+						is SynchronousTask -> iterator.add(task.copy(nextExecutionTick))
+					}
+				}
 			}
 		}
 		currentTick++
 	}
 
 	/**
-	 * Schedules a task to run asynchronously after a certain amount of ticks.
-	 * @param delay The amount of ticks to wait before running the task.
-	 * @param task The task to run.
-	 */
-	fun scheduleAsync(delay: UInt, task: suspend CoroutineScope.() -> Unit) {
-		if (delay == 0u) runAsyncTask(task)
-		tasks += AsynchronousTask(currentTick + delay, block = task)
-	}
-
-	/**
-	 * Schedules a task to run synchronously after a certain amount of ticks.
-	 * @param delay The amount of ticks to wait before running the task.
+	 * Schedules a task to run synchronously in the main thread after a certain number of ticks.
+	 * @param delay The number of ticks to wait before running the task.
 	 * @param task The task to run.
 	 */
 	fun schedule(delay: UInt, task: () -> Unit) {
-		if (delay == 0u) runSyncTask(task)
+		// This will still add the task to the list even if the delay is 0, perhaps executing in the next tick if the tick has already happened.
+		// This is better than running the task immediately, because then the task would be executed in the calling thread, which is not what we want.
 		tasks += SynchronousTask(currentTick + delay, block = task)
 	}
 
 	/**
-	 * Schedules a task to run synchronously after a certain amount of ticks.
-	 * @param delay The amount of ticks to wait before running the task for the first time.
-	 * @param ticks The amount of ticks to wait before running the task again.
+	 * Schedules a task to run asynchronously after a certain number of ticks.
+	 * @param delay The number of ticks to wait before running the task.
+	 * @param task The task to run.
+	 */
+	fun scheduleAsync(delay: UInt, task: suspend CoroutineScope.() -> Unit) {
+		tasks += AsynchronousTask(currentTick + delay, block = task)
+	}
+
+	/**
+	 * Schedules a task to run synchronously after a certain number of ticks.
+	 * @param delay The number of ticks to wait before running the task for the first time.
+	 * @param ticks The number of ticks to wait before running the task again.
 	 * @param task The task to run.
 	 */
 	fun scheduleCyclic(delay: UInt, ticks: UInt, task: () -> Unit) {
@@ -70,9 +79,9 @@ object Scheduler : ClientTickable() {
 	}
 
 	/**
-	 * Schedules a task to run asynchronously after a certain amount of ticks.
-	 * @param delay The amount of ticks to wait before running the task for the first time.
-	 * @param ticks The amount of ticks to wait before running the task again.
+	 * Schedules a task to run asynchronously after a certain number of ticks.
+	 * @param delay The number of ticks to wait before running the task for the first time.
+	 * @param ticks The number of ticks to wait before running the task again.
 	 * @param task The task to run.
 	 */
 	fun scheduleCyclicAsync(delay: UInt, ticks: UInt, task: suspend CoroutineScope.() -> Unit) {

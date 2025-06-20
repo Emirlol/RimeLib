@@ -1,27 +1,25 @@
 [versions]
-modVersion = "1.0-SNAPSHOT"
-
 # https://fabricmc.net/develop/
-minecraft = "1.21.4"
-yarnMappings = "1.21.4+build.8"
-fabricLoader = "0.16.10"
-fabricApi = "0.116.1+1.21.4"
+minecraft = "1.21.6"
+yarnMappings = "1.21.6+build.1"
+fabricLoader = "0.16.14"
+fabricApi = "0.127.1+1.21.6"
 
 fabricLanguageKotlin = "1.13.2+kotlin.2.1.20" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
 kotlin = "2.1.20" # Match this to the one above
 loom = "1.10-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
-ksp = "2.1.20-1.0.31" #https://github.com/google/ksp/releases
-magik = "0.3.2" # https://github.com/GradleUp/magik/releases
+ksp = "2.1.20-1.0.32" #https://github.com/google/ksp/releases
 
-symbols = "1.0.0"
+init = "1.0.1"
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
 apacheMath4 = "4.0-beta1" # https://mvnrepository.com/artifact/org.apache.commons/commons-math4-core
-apacheText = "1.13.0" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
+apacheText = "1.13.1" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+yarnMappings = { module = "net.fabricmc:yarn", version.ref = "yarnMappings" }
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 fabricLoaderJunit = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabricLoader" }
 fabricLanguageKotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabricLanguageKotlin" }
@@ -32,9 +30,8 @@ apacheMath4 = { module = "org.apache.commons:commons-math4-core", version.ref = 
 apacheText = { module = "org.apache.commons:commons-text", version.ref = "apacheText" }
 pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" }
 
-initProcessor = { module = "me.rime.symbols:init-processor", version.ref = "symbols" }
-initAnnotation = { module = "me.rime.symbols:init-annotation", version.ref = "symbols" }
-
+init-processor = { module = "me.ancientri.symbols:init-processor", version.ref = "init" }
+init-annotation = { module = "me.ancientri.symbols:init-annotation", version.ref = "init" }
 
 [bundles]
 
@@ -42,4 +39,3 @@ initAnnotation = { module = "me.rime.symbols:init-annotation", version.ref = "sy
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 loom = { id = "fabric-loom", version.ref = "loom" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-magik = { id = "elect86.magik", version.ref = "magik" }

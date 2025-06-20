@@ -1,4 +1,4 @@
-package me.rime.rimelib.util.events
+package me.ancientri.rimelib.util.events
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient
  * Automatically registers [exit] to [ClientLifecycleEvents.CLIENT_STOPPING].
  */
 @Environment(EnvType.CLIENT)
-abstract class Exitable() {
+abstract class Exitable {
 	init {
 		ClientLifecycleEvents.CLIENT_STOPPING.register(::exit)
 	}

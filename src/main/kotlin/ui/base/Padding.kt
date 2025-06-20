@@ -1,4 +1,4 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
 data class Padding(val left: Int, val right: Int, val top: Int, val bottom: Int) {
 	constructor(horizontal: Int, vertical: Int) : this(horizontal, horizontal, vertical, vertical)

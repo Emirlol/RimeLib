@@ -1,6 +1,6 @@
-package me.rime.rimelib.ui.base
+package me.ancientri.rimelib.ui.base
 
-import me.rime.rimelib.ui.base.Constants.LEFT_MOUSE_BUTTON
+import me.ancientri.rimelib.ui.base.Constants.LEFT_MOUSE_BUTTON
 
 /**
  * An element that can contain other elements.

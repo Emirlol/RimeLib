@@ -1,6 +1,6 @@
 package util
 
-import me.rime.rimelib.util.interleaveWith
+import me.ancientri.rimelib.util.interleaveWith
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

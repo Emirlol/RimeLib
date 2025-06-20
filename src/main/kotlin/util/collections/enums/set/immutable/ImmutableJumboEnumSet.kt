@@ -1,9 +1,9 @@
-package me.rime.rimelib.util.collections.enums.set.immutable
+package me.ancientri.rimelib.util.collections.enums.set.immutable
 
 import com.danrusu.pods4k.immutableArrays.ImmutableLongArray
 import com.danrusu.pods4k.immutableArrays.buildImmutableLongArray
 import com.danrusu.pods4k.immutableArrays.toImmutableArray
-import me.rime.rimelib.util.collections.enums.set.mutable.JumboEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.mutable.JumboEnumSet
 import kotlin.enums.EnumEntries
 
 /**
