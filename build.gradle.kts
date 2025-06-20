@@ -12,18 +12,17 @@ version = "${properties["version"]}+${libs.versions.minecraft.get()}"
 
 repositories {
 	mavenCentral()
-	mavenLocal()
-//	exclusiveContent {
-//		forRepositories(
-//			maven("https://ancientri.me/maven/releases") {
-//				name = "AncientRime"
-//			}
-//		)
-//		filter {
-//			@Suppress("UnstableApiUsage")
-//			includeGroupAndSubgroups("me.ancientri")
-//		}
-//	}
+	exclusiveContent {
+		forRepositories(
+			maven("https://ancientri.me/maven/releases") {
+				name = "AncientRime"
+			}
+		)
+		filter {
+			@Suppress("UnstableApiUsage")
+			includeGroupAndSubgroups("me.ancientri")
+		}
+	}
 }
 
 dependencies {
