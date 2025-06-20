@@ -33,7 +33,6 @@ dependencies {
 	modImplementation(libs.fabricLanguageKotlin)
 
 	include(implementation(libs.apacheText.get())!!)
-	include(implementation(libs.apacheMath4.get())!!)
 	include(implementation(libs.pods4k.get())!!)
 
 	compileOnly(libs.mcdev)
