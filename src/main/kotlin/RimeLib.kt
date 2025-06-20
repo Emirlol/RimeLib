@@ -1,61 +1,25 @@
-package me.rime.rimelib
+package me.ancientri.rimelib
 
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.cbor.Cbor
-import kotlinx.serialization.json.Json
-import me.rime.rimelib.ui.debug.DebugScreen
-import me.rime.rimelib.util.client
-import me.rime.rimelib.util.fabricLoader
-import me.rime.rimelib.util.register
-import net.fabricmc.api.EnvType
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.ServerStarting
+import me.ancientri.rimelib.util.LoggerFactory
+import me.ancientri.rimelib.util.command.register
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.util.Identifier
 
-@OptIn(ExperimentalSerializationApi::class)
 object RimeLib {
-	@Deprecated("This method is called by the Fabric Loader. Do not call this method manually.", level = DeprecationLevel.ERROR)
+	@Deprecated("This method is called by the Fabric Loader. Do not call this method manually.", level = DeprecationLevel.ERROR, replaceWith = ReplaceWith(""))
 	fun init() {
-//		Initializer // Initialize features.
-		when (fabricLoader.environmentType) {
-			EnvType.CLIENT -> initClient()
-			EnvType.SERVER -> initServer()
-			null -> throw IllegalStateException("Environment type is null")
-		}
-	}
-
-	private fun initClient() {
-		ClientCommandRegistrationCallback.EVENT.register(NAMESPACE) {
-			literal("openScreen") {
-				executes {
-					client.send {
-						client.setScreen(DebugScreen())
-					}
-				}
+		Initializer // Initialize features.
+		CommandRegistrationCallback.EVENT.register(NAMESPACE) {
+			literal("asd") executes {
+				it.source
 			}
 		}
 	}
 
-	private fun initServer() {
-
-	}
-
 	fun identifier(path: String): Identifier = Identifier.of(NAMESPACE, path)
 
-	const val MOD_ID = "rimelib"
+	const val MOD_NAME = "RimeLib"
 	const val NAMESPACE = "rimelib"
-	val JSON_COMPACT = Json {
-		ignoreUnknownKeys = true
-		explicitNulls = true
-	}
-	val JSON = Json {
-		prettyPrint = true
-		prettyPrintIndent = "\t"
-		ignoreUnknownKeys = true
-		explicitNulls = true
-	}
-	val CBOR = Cbor {
-		ignoreUnknownKeys = true
-	}
+
+	val loggerFactory = LoggerFactory(MOD_NAME)
 }

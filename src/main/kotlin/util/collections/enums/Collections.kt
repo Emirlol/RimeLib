@@ -1,11 +1,11 @@
-package me.rime.rimelib.util.collections.enums
+package me.ancientri.rimelib.util.collections.enums
 
-import me.rime.rimelib.util.collections.enums.set.immutable.EnumSet
-import me.rime.rimelib.util.collections.enums.set.immutable.ImmutableJumboEnumSet
-import me.rime.rimelib.util.collections.enums.set.immutable.ImmutableRegularEnumSet
-import me.rime.rimelib.util.collections.enums.set.mutable.JumboEnumSet
-import me.rime.rimelib.util.collections.enums.set.mutable.MutableEnumSet
-import me.rime.rimelib.util.collections.enums.set.mutable.RegularEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.immutable.EnumSet
+import me.ancientri.rimelib.util.collections.enums.set.immutable.ImmutableJumboEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.immutable.ImmutableRegularEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.mutable.JumboEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.mutable.MutableEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.mutable.RegularEnumSet
 import kotlin.enums.EnumEntries
 import kotlin.enums.enumEntries
 
@@ -14,7 +14,7 @@ import kotlin.enums.enumEntries
 
 // region EnumSets
 
-//   region Generic
+// region Generic
 /**
  * Creates a new [MutableEnumSet] of the appropriate type for the given enum type [E] with no elements.
  */
@@ -59,7 +59,7 @@ inline fun <reified E : Enum<E>> enumSetOf(elements: Collection<E>): EnumSet<E> 
 
 //   endregion Generic
 
-//   region Typed
+// region Typed
 
 /**
  * Creates a new [RegularEnumSet] for the given enum type [E] with no elements.
@@ -114,24 +114,24 @@ inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntrie
  *
  * @throws IllegalArgumentException If the enum type [E] has more than 64 elements.
  */
-inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableJumboEnumSet] for the given enum type [E] with the given elements.
  */
-inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), vararg elements: E): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableRegularEnumSet] for the given enum type [E] with the given elements.
  *
  * @throws IllegalArgumentException If the enum type [E] has more than 64 elements.
  */
-inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableRegularEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableRegularEnumSet<E> = RegularEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 
 /**
  * Creates a new [ImmutableJumboEnumSet] for the given enum type [E] with the given elements.
  */
-inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.asImmutable()
+inline fun <reified E : Enum<E>> immutableJumboEnumSetOf(enumEntries: EnumEntries<E> = enumEntries(), elements: Collection<E>): ImmutableJumboEnumSet<E> = JumboEnumSet(enumEntries).apply { addAll(elements) }.immutableCopyOf()
 //   endregion Typed
 
 // endregion EnumSets

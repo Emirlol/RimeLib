@@ -1,4 +1,4 @@
-package me.rime.rimelib.util.events
+package me.ancientri.rimelib.util.events
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -11,7 +11,7 @@ import net.minecraft.server.MinecraftServer
  * Automatically registers [tick] to [ServerTickEvents.END_SERVER_TICK].
  */
 @Environment(EnvType.SERVER)
-abstract class ServerTickable() {
+abstract class ServerTickable {
 	init {
 		ServerTickEvents.END_SERVER_TICK.register(::tick)
 	}

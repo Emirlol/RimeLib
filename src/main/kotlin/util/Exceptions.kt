@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package me.rime.rimelib.util
+package me.ancientri.rimelib.util
 
 inline fun unsupported(): Nothing = throw UnsupportedOperationException()
 

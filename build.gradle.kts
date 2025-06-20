@@ -1,50 +1,47 @@
-
-import magik.createGithubPublication
-import magik.github
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	alias(libs.plugins.kotlin)
 	alias(libs.plugins.loom)
 	alias(libs.plugins.ksp)
-	alias(libs.plugins.magik)
 	`maven-publish`
 }
 
-version = "${libs.versions.modVersion.get()}+${libs.versions.minecraft.get()}"
-group = project.property("maven_group") as String
+group = properties["group"] as String
+version = "${properties["version"]}+${libs.versions.minecraft.get()}"
 
 repositories {
 	mavenCentral()
-	exclusiveContent {
-		forRepository {
-			mavenLocal() // The github repo has jvm compatibility issues, so install it locally first.
-//			github("Emirlol/Maven")
-		}
-		filter {
-			@Suppress("UnstableApiUsage")
-			includeGroupAndSubgroups("me.rime")
-		}
-	}
+	mavenLocal()
+//	exclusiveContent {
+//		forRepositories(
+//			maven("https://ancientri.me/maven/releases") {
+//				name = "AncientRime"
+//			}
+//		)
+//		filter {
+//			@Suppress("UnstableApiUsage")
+//			includeGroupAndSubgroups("me.ancientri")
+//		}
+//	}
 }
 
 dependencies {
-	minecraft(libs.minecraft.get())
-	mappings("net.fabricmc:yarn:${libs.versions.yarnMappings.get()}:v2")
-	modImplementation(libs.fabricLoader.get())
-	modImplementation(libs.fabricApi.get())
+	minecraft(libs.minecraft)
+	mappings(variantOf(libs.yarnMappings) { classifier("v2") })
+	modImplementation(libs.fabricLoader)
+	modImplementation(libs.fabricApi)
+	modImplementation(libs.fabricLanguageKotlin)
 
-	modImplementation(libs.fabricLanguageKotlin.get())
 	include(implementation(libs.apacheText.get())!!)
 	include(implementation(libs.apacheMath4.get())!!)
 	include(implementation(libs.pods4k.get())!!)
-	compileOnly(libs.mcdev.get())
 
-	compileOnly(libs.initAnnotation)
-	ksp(libs.initProcessor.get())
+	compileOnly(libs.mcdev)
+	compileOnly(libs.init.annotation)
+	ksp(libs.init.processor)
 
-	testImplementation(libs.fabricLoaderJunit.get())
+	testImplementation(libs.fabricLoaderJunit)
 }
 
 loom {
@@ -52,19 +49,17 @@ loom {
 }
 
 base {
-	archivesName = "rimelib"
+	archivesName = properties["archives_base_name"] as String
 }
 
-val targetJavaVersion = 21
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-		vendor = JvmVendorSpec.ADOPTIUM
-	}
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+}
+
+kotlin {
+	jvmToolchain(21)
 }
 
 tasks {
@@ -90,40 +85,21 @@ tasks {
 		// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 		// If Javadoc is generated, this must be specified in that task too.
 		options.encoding = "UTF-8"
-		options.release.set(targetJavaVersion)
 	}
 
 	withType<KotlinCompile>().configureEach {
 		compilerOptions {
-			jvmTarget = JvmTarget.fromTarget(targetJavaVersion.toString())
+			freeCompilerArgs.add("-Xsuppress-warning=NOTHING_TO_INLINE")
 		}
 	}
 
 	jar {
 		from("LICENSE") {
-			rename { "${it}_${project.base.archivesName}" }
+			rename { "${it}_${project.base.archivesName.get()}" }
 		}
 	}
 
 	test {
 		useJUnitPlatform()
-	}
-}
-
-publishing {
-	publications {
-		createGithubPublication {
-			groupId = project.group as String
-			artifactId = project.base.archivesName.get()
-			version = project.version as String
-
-			from(components["java"])
-		}
-	}
-	repositories {
-		github {
-			name = "RimeMaven"
-			domain = "Emirlol/Maven"
-		}
 	}
 }

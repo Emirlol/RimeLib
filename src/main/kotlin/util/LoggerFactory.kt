@@ -1,26 +1,21 @@
-package me.rime.rimelib.util
+package me.ancientri.rimelib.util
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
-object LogUtil {
+/**
+ * A [slf4j LoggerFactory][org.slf4j.LoggerFactory] wrapper that allows you to create loggers with a specific prefix.
+ *
+ * This is meant to be kept in a single instance, so you can create it once with your mod's name and use it everywhere while keeping it obvious which mod the log is from.
+ */
+class LoggerFactory(private val prefix: String) {
 	/**
-	 * Wrapper around [LoggerFactory.getLogger] to unify all logger creations under this class.
+	 * Creates a logger with the given name, prefixed with the provided prefix.
 	 *
 	 * @param name The name of the logger.
 	 */
-	fun createLogger(name: String): Logger = LoggerFactory.getLogger(name)
-
-	/**
-	 * Creates a logger with the given name and a prefix.
-	 *
-	 * The format of the logger name is "$prefix | $name".
-	 *
-	 * @param name The name of the logger.
-	 * @param prefix The prefix to prepend to the name.
-	 */
-	fun createLogger(name: String, prefix: String = "RimeLib"): Logger = LoggerFactory.getLogger("$prefix | $name")
+	fun createLogger(name: String): Logger = LoggerFactory.getLogger("$prefix | $name")
 
 	/**
 	 * Creates a logger with the name of the class.

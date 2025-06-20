@@ -1,4 +1,4 @@
-package me.rime.rimelib.util
+package me.ancientri.rimelib.util
 
 import net.minecraft.util.profiler.Profilers
 

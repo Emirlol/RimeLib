@@ -1,8 +1,8 @@
-package me.rime.rimelib.util.collections.enums.set.mutable
+package me.ancientri.rimelib.util.collections.enums.set.mutable
 
 import com.danrusu.pods4k.immutableArrays.toMutableArray
 import it.unimi.dsi.fastutil.longs.LongArrays
-import me.rime.rimelib.util.collections.enums.set.immutable.ImmutableJumboEnumSet
+import me.ancientri.rimelib.util.collections.enums.set.immutable.ImmutableJumboEnumSet
 import java.util.*
 import kotlin.enums.EnumEntries
 
@@ -74,7 +74,7 @@ class JumboEnumSet<E : Enum<E>>(enumEntries: EnumEntries<E>) : MutableEnumSet<E>
 		val ordinal = element.ordinal
 		val index = ordinal.arrayIndex()
 		val oldElements = elements[index]
-		elements[index] = elements[index] or 1L shl ordinal
+		elements[index] = elements[index] or (1L shl ordinal)
 		val changed = oldElements != elements[index]
 		if (changed) size++
 		return changed
