@@ -13,7 +13,6 @@ ksp = "2.1.20-1.0.32" #https://github.com/google/ksp/releases
 
 init = "1.0.1"
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
-apacheMath4 = "4.0-beta1" # https://mvnrepository.com/artifact/org.apache.commons/commons-math4-core
 apacheText = "1.13.1" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
 
@@ -26,7 +25,6 @@ fabricLanguageKotlin = { module = "net.fabricmc:fabric-language-kotlin", version
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 
 mcdev = { module = "com.demonwav.mcdev:annotations", version.ref = "mcdev" }
-apacheMath4 = { module = "org.apache.commons:commons-math4-core", version.ref = "apacheMath4" }
 apacheText = { module = "org.apache.commons:commons-text", version.ref = "apacheText" }
 pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" }
 
