@@ -51,9 +51,14 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 				return
 			}
 		}
+
+		for (configClass in classes) {
+			logger.info("Generating builder for class: ${configClass.qualifiedName?.asString()}")
+			generateBuilderFile(codeGenerator, configClass)
+		}
 	}
 
-	fun generateBuilderFile(codeGenerator: CodeGenerator, configClass: KSClassDeclaration) {
+	private fun generateBuilderFile(codeGenerator: CodeGenerator, configClass: KSClassDeclaration) {
 		val generatedClassName = configClass.simpleName.getShortName() + "Builder"
 		val classQualifiedName = configClass.qualifiedName?.asString()
 			?: error("Config class ${configClass.simpleName.asString()} does not have a qualified name, cannot generate builder file.")
@@ -96,6 +101,7 @@ ${configClass.primaryConstructor!!.parameters.joinToString(separator = "\n") { p
 
 	companion object {
 		const val BUILDER_QUALIFIED_NAME = "me.ancientri.rimelib.config.api.ConfigBuilder"
+
 		/**
 		 * A simple syntax highlighter for Kotlin code, using the IntelliJ IDEA's language injection feature.
 		 *
