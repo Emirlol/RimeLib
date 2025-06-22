@@ -15,7 +15,10 @@ import java.nio.file.Path
 import kotlin.io.path.bufferedReader
 import kotlin.io.path.notExists
 
-abstract class JsonCodecConfigManager<C, B : ConfigBuilder<C>>(
+/**
+ * A json-based config manager that uses a [Codec] to encode and decode the config object.
+ */
+abstract class JsonCodecConfigManager<C : Any, B : ConfigBuilder<C>>(
 	override val configPath: Path,
 	override val codec: Codec<C>,
 	val default: C
@@ -24,27 +27,32 @@ abstract class JsonCodecConfigManager<C, B : ConfigBuilder<C>>(
 	val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 	val ops: JsonOps get() = JsonOps.INSTANCE
 
-	init {
-		setConfig(
-			if (configPath.notExists()) {
-				logger.info("Config file {} does not exist, creating with default values.", relativePath)
-				default
-			} else when (val loadedConfig = loadConfig()) {
-				null -> {
-					logger.warn("Config file {} is invalid or could not be loaded, using default values.", relativePath)
-					default
-				}
+	override lateinit var config: C
+		protected set
 
-				else -> {
-					logger.info("Loaded config file {}.", relativePath)
-					loadedConfig
-				}
+	init {
+		config = if (configPath.notExists()) {
+			logger.info("Config file {} does not exist, creating with default values.", relativePath)
+			default
+		} else when (val loadedConfig = loadConfig()) {
+			null -> {
+				logger.warn("Config file {} is invalid or could not be loaded, using default values.", relativePath)
+				default
 			}
-		)
+
+			else -> {
+				logger.info("Loaded config file {}.", relativePath)
+				loadedConfig
+			}
+		}
 	}
 
+	/**
+	 * Modifies the current config using the provided builder function and saves the changes to the config file.
+	 * @param builder A lambda function that takes a [B] (config builder) and modifies it.
+	 */
 	fun updateConfig(builder: B.() -> Unit): C {
-		setConfig(modifyConfig(builder))
+		config = modifyConfig(builder)
 		saveConfig()
 		return config
 	}

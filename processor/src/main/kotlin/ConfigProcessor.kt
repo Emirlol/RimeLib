@@ -72,8 +72,19 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 						"""
 package ${configClass.packageName.asString()}
 
+/**
+ * Convenience function to create a new instance of [$classSimpleName] from an existing instance using the builder.
+ * 
+ * It's recommended to use the modification methods in the config manager instead of this function,
+ * but this function can still be useful for nested config situations where you have one main config object that has other configs as properties.
+ * 
+ * Nesting config objects is a necessary approach because data classes can only have up to 255 parameters in their primary constructor, and you'll have to nest them if you have more than that.
+ */
 inline fun ${classSimpleName}.update(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
 
+/**
+ * Auto-generated builder for [$classSimpleName]. Do not modify this file directly, any changes will be overwritten by the symbol processor.
+ */
 class $generatedClassName(config: ${classSimpleName}) : $BUILDER_QUALIFIED_NAME<$classSimpleName> {
 ${configClass.primaryConstructor!!.parameters.joinToString(separator = "\n") { param ->
 	"\tvar ${param.name?.asString()} = config.${param.name?.asString()}" 

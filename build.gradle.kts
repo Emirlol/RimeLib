@@ -23,6 +23,7 @@ dependencies {
 
 	compileOnly(libs.mcdev)
 	compileOnly(libs.init.annotation)
+	compileOnly(project(":annotations"))
 	ksp(libs.init.processor)
 
 	testImplementation(libs.fabricLoaderJunit)
