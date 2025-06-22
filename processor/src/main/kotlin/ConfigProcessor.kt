@@ -72,7 +72,7 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 						"""
 package ${configClass.packageName.asString()}
 
-inline fun ${classSimpleName}.builder(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
+inline fun ${classSimpleName}.update(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
 
 class $generatedClassName(config: ${classSimpleName}) : $BUILDER_QUALIFIED_NAME<$classSimpleName> {
 
