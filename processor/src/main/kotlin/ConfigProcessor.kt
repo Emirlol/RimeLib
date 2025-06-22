@@ -75,7 +75,6 @@ package ${configClass.packageName.asString()}
 inline fun ${classSimpleName}.update(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
 
 class $generatedClassName(config: ${classSimpleName}) : $BUILDER_QUALIFIED_NAME<$classSimpleName> {
-
 ${configClass.primaryConstructor!!.parameters.joinToString(separator = "\n") { param ->
 	"\tvar ${param.name?.asString()} = config.${param.name?.asString()}" 
 }}
