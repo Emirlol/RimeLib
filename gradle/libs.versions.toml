@@ -15,6 +15,7 @@ init = "1.0.1"
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
 apacheText = "1.13.1" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
+kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet/releases/
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -31,7 +32,16 @@ pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" }
 init-processor = { module = "me.ancientri.symbols:init-processor", version.ref = "init" }
 init-annotation = { module = "me.ancientri.symbols:init-annotation", version.ref = "init" }
 
+symbolProcessingApi = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
+kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+
 [bundles]
+kotlinpoet = [
+    "kotlinpoet",
+    "kotlinpoet-ksp"
+]
+
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

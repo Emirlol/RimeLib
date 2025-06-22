@@ -1,4 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
 
 plugins {
 	alias(libs.plugins.kotlin)
@@ -9,21 +10,6 @@ plugins {
 
 group = properties["group"] as String
 version = "${properties["version"]}+${libs.versions.minecraft.get()}"
-
-repositories {
-	mavenCentral()
-	exclusiveContent {
-		forRepositories(
-			maven("https://ancientri.me/maven/releases") {
-				name = "AncientRime"
-			}
-		)
-		filter {
-			@Suppress("UnstableApiUsage")
-			includeGroupAndSubgroups("me.ancientri")
-		}
-	}
-}
 
 dependencies {
 	minecraft(libs.minecraft)
@@ -42,6 +28,45 @@ dependencies {
 	testImplementation(libs.fabricLoaderJunit)
 }
 
+allprojects {
+	version = property("version") as String
+
+	repositories {
+		mavenCentral()
+		exclusiveContent {
+			forRepositories(
+				maven("https://ancientri.me/maven/releases") {
+					name = "AncientRime"
+				}
+			)
+			filter {
+				@Suppress("UnstableApiUsage")
+				includeGroupAndSubgroups("me.ancientri")
+			}
+		}
+	}
+
+	plugins.withType<JavaPlugin> {
+		extensions.configure<JavaPluginExtension>() {
+			withSourcesJar()
+		}
+	}
+
+	plugins.withType<KotlinBasePlugin> {
+		extensions.configure<KotlinJvmProjectExtension> {
+			jvmToolchain(21)
+		}
+	}
+
+	extensions.findByType<PublishingExtension>()?.repositories?.maven("https://ancientri.me/maven/releases") {
+		name = "AncientRime"
+		credentials(PasswordCredentials::class)
+		authentication {
+			create<BasicAuthentication>("basic")
+		}
+	}
+}
+
 loom {
 	accessWidenerPath = project.file("src/main/resources/rimelib.accesswidener")
 }
@@ -50,15 +75,6 @@ base {
 	archivesName = properties["archives_base_name"] as String
 }
 
-java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
-}
-
-kotlin {
-	jvmToolchain(21)
-}
 
 tasks {
 	processResources {
@@ -77,20 +93,6 @@ tasks {
 		}
 	}
 
-	withType<JavaCompile>().configureEach {
-		// ensure that the encoding is set to UTF-8, no matter what the system default is
-		// this fixes some edge cases with special characters not displaying correctly
-		// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-		// If Javadoc is generated, this must be specified in that task too.
-		options.encoding = "UTF-8"
-	}
-
-	withType<KotlinCompile>().configureEach {
-		compilerOptions {
-			freeCompilerArgs.add("-Xsuppress-warning=NOTHING_TO_INLINE")
-		}
-	}
-
 	jar {
 		from("LICENSE") {
 			rename { "${it}_${project.base.archivesName.get()}" }
@@ -99,5 +101,16 @@ tasks {
 
 	test {
 		useJUnitPlatform()
+	}
+}
+
+publishing {
+	publications {
+		create<MavenPublication>("maven") {
+			groupId = project.group as String
+			artifactId = project.base.archivesName.get()
+			version = project.version as String
+			from(components["java"])
+		}
 	}
 }
