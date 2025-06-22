@@ -59,9 +59,8 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 	}
 
 	private fun generateBuilderFile(codeGenerator: CodeGenerator, configClass: KSClassDeclaration) {
-		val generatedClassName = configClass.simpleName.getShortName() + "Builder"
-		val classQualifiedName = configClass.qualifiedName?.asString()
-			?: error("Config class ${configClass.simpleName.asString()} does not have a qualified name, cannot generate builder file.")
+		val classSimpleName = configClass.simpleName.asString()
+		val generatedClassName = classSimpleName + "Builder"
 		codeGenerator
 			.createNewFile(Dependencies(false, ksFile!!), configClass.packageName.asString(), generatedClassName)
 			.bufferedWriter()
@@ -70,24 +69,20 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 					syntaxHighlighter(
 						// region Generated Code
 						// @formatter:off
-
 						"""
 package ${configClass.packageName.asString()}
 
-inline fun ${classQualifiedName}.builder(builder: $generatedClassName.() -> Unit): $generatedClassName = $generatedClassName(this).apply(builder).build()
+inline fun ${classSimpleName}.builder(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
 
-class $generatedClassName(config: ${classQualifiedName}) : $BUILDER_QUALIFIED_NAME<$classQualifiedName> {
+class $generatedClassName(config: ${classSimpleName}) : $BUILDER_QUALIFIED_NAME<$classSimpleName> {
 
 ${configClass.primaryConstructor!!.parameters.joinToString(separator = "\n") { param ->
-	val type = param.type.resolve()
-	// Expected format: `val <name>: <type><nullability if applicable>`
-	val nullability = if (type.isMarkedNullable) "?" else ""
-	"\tvar ${param.name?.asString()}: ${type.declaration.qualifiedName?.asString()}$nullability = config.${param.name?.asString()}" 
+	"\tvar ${param.name?.asString()} = config.${param.name?.asString()}" 
 }}
 
-	override fun build(): $classQualifiedName = ${classQualifiedName}(
+	override fun build(): $classSimpleName = ${classSimpleName}(
 		${configClass.primaryConstructor!!.parameters.joinToString(separator = ",\n\t\t") { param ->
-			param.name?.asString() ?: error("Parameter name is null in primary constructor of $classQualifiedName")
+			param.name?.asString() ?: error("Parameter name is null in primary constructor of $classSimpleName")
 		}}
 	)
 }
