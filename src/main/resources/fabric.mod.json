@@ -5,7 +5,11 @@
 	"name": "rimelib",
 	"description": "Kotlin utility library for Minecraft mods.",
 	"authors": [ "Rime" ],
-	"contact": { },
+	"contact": {
+		"sources": "https://github.com/Emirlol/RimeLib",
+		"issues": "https://github.com/Emirlol/RimeLib/issues",
+		"homepage": "https://modrinth.com/mod/rimelib"
+	},
 	"license": "MIT",
 	"environment": "*",
 	"accessWidener": "rimelib.accesswidener",
