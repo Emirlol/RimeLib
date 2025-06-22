@@ -3,6 +3,8 @@ plugins {
 	`maven-publish`
 }
 
+version = property("symbols_version") as String
+
 publishing {
 	publications {
 		create<MavenPublication>("maven") {

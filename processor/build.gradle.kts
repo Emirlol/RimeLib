@@ -4,6 +4,8 @@ plugins {
 	`maven-publish`
 }
 
+version = property("symbols_version") as String
+
 dependencies {
 	implementation(libs.symbolProcessingApi)
 	libs.bundles.kotlinpoet.get().map(::implementation)
