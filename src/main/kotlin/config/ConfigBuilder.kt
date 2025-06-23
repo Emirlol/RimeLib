@@ -1,4 +1,4 @@
-package me.ancientri.rimelib.config.api
+package me.ancientri.rimelib.config
 
 /**
  * A builder interface for creating instances of a config.
