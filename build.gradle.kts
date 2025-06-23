@@ -24,6 +24,7 @@ dependencies {
 	compileOnly(libs.mcdev)
 	compileOnly(libs.init.annotation)
 	compileOnly(project(":annotations"))
+
 	ksp(libs.init.processor)
 
 	testImplementation(libs.fabricLoaderJunit)
@@ -56,14 +57,6 @@ allprojects {
 	plugins.withType<KotlinBasePlugin> {
 		extensions.configure<KotlinJvmProjectExtension> {
 			jvmToolchain(21)
-		}
-	}
-
-	extensions.findByType<PublishingExtension>()?.repositories?.maven("https://ancientri.me/maven/releases") {
-		name = "AncientRime"
-		credentials(PasswordCredentials::class)
-		authentication {
-			create<BasicAuthentication>("basic")
 		}
 	}
 }
@@ -106,6 +99,15 @@ tasks {
 }
 
 publishing {
+	repositories {
+		maven("https://ancientri.me/maven/releases") {
+			name = "AncientRime"
+			credentials(PasswordCredentials::class)
+			authentication {
+				create<BasicAuthentication>("basic")
+			}
+		}
+	}
 	publications {
 		create<MavenPublication>("maven") {
 			groupId = project.group as String

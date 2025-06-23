@@ -13,6 +13,15 @@ dependencies {
 }
 
 publishing {
+	repositories {
+		maven("https://ancientri.me/maven/releases") {
+			name = "AncientRime"
+			credentials(PasswordCredentials::class)
+			authentication {
+				create<BasicAuthentication>("basic")
+			}
+		}
+	}
 	publications {
 		create<MavenPublication>("maven") {
 			groupId = "me.ancientri.symbols"
