@@ -1,7 +1,7 @@
 package me.ancientri.rimelib.config.api
 
 import me.ancientri.rimelib.util.FabricLoader
-import me.ancientri.symbols.config.Config
+import me.ancientri.symbols.config.ConfigClass
 import java.nio.file.Path
 
 /**
@@ -14,7 +14,7 @@ import java.nio.file.Path
  * This manager is designed to work with immutable configuration objects, meaning that the config object held by this manager should not be modified directly.
  * Instead, modifications should be made through a [ConfigBuilder][B] instance, which can then be used to create a new config object.
  *
- * It's recommended to use [Config] annotation on the config class to generate the builder automatically, but you can also implement the [ConfigBuilder][B] interface manually if needed.
+ * It's recommended to use [ConfigClass] annotation on the config class to generate the builder automatically, but you can also implement the [ConfigBuilder][B] interface manually if needed.
  *
  * @param C The type of the config object.
  * @param B The type of the config builder.

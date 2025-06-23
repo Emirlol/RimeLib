@@ -10,7 +10,7 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 	private var classes = mutableListOf<KSClassDeclaration>()
 
 	override fun process(resolver: Resolver): List<KSAnnotated> = with(environment) {
-		val symbols = resolver.getSymbolsWithAnnotation(Config::class.qualifiedName!!)
+		val symbols = resolver.getSymbolsWithAnnotation(ConfigClass::class.qualifiedName!!)
 
 		for (symbol in symbols) {
 			if (symbol is KSClassDeclaration) {

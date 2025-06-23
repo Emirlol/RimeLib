@@ -5,4 +5,4 @@ package me.ancientri.symbols.config
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
-annotation class Config()
+annotation class ConfigClass()
