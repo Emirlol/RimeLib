@@ -27,7 +27,9 @@ fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabr
 
 mcdev = { module = "com.demonwav.mcdev:annotations", version.ref = "mcdev" }
 apacheText = { module = "org.apache.commons:commons-text", version.ref = "apacheText" }
-pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" }
+pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" } # The main library module, this contains the bottom 2. But since loom doesn't include transitive dependencies, we need to include them separately.
+pods4k-core = { module = "com.danrusu.pods4k.immutable-arrays:core", version.ref = "pods4k" }
+pods4k-transformations = { module = "com.danrusu.pods4k.immutable-arrays:transformations-to-standard-collections", version.ref = "pods4k" }
 
 init-processor = { module = "me.ancientri.symbols:init-processor", version.ref = "init" }
 init-annotation = { module = "me.ancientri.symbols:init-annotation", version.ref = "init" }

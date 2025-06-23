@@ -19,13 +19,16 @@ dependencies {
 	modImplementation(libs.fabricLanguageKotlin)
 
 	include(implementation(libs.apacheText.get())!!)
-	include(implementation(libs.pods4k.get())!!)
 
 	compileOnly(libs.mcdev)
 	compileOnly(libs.init.annotation)
 	compileOnly(project(":annotations"))
 
 	ksp(libs.init.processor)
+
+	api(libs.pods4k)
+	include(implementation(libs.pods4k.core.get())!!)
+	include(implementation(libs.pods4k.transformations.get())!!)
 
 	testImplementation(libs.fabricLoaderJunit)
 }
