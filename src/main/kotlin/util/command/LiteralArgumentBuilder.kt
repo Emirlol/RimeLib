@@ -4,5 +4,5 @@ import com.mojang.brigadier.tree.LiteralCommandNode
 import net.minecraft.command.CommandSource
 
 class LiteralArgumentBuilder<S>(private val literal: String) : ArgumentBuilder<S>() where S : CommandSource {
-	override fun build(): LiteralCommandNode<S> = LiteralCommandNode(literal, command, requirement, redirect, modifier, forks).apply { arguments.children.forEach(::addChild) }
+	override fun build(): LiteralCommandNode<S> = LiteralCommandNode(literal, command, requirement, redirect, modifier, forks).apply { root.children.forEach(::addChild) }
 }

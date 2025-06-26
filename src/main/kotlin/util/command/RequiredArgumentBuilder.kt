@@ -17,5 +17,5 @@ class RequiredArgumentBuilder<S, T>(private val name: String, private val type: 
 		this.suggestionsProvider = provider
 	}
 
-	override fun build(): ArgumentCommandNode<S, T> = ArgumentCommandNode(name, type, command, requirement, redirect, modifier, forks, suggestionsProvider).also { arguments.children.forEach(it::addChild) }
+	override fun build(): ArgumentCommandNode<S, T> = ArgumentCommandNode(name, type, command, requirement, redirect, modifier, forks, suggestionsProvider).also { root.children.forEach(it::addChild) }
 }
