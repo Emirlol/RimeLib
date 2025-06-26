@@ -10,6 +10,9 @@ import net.fabricmc.fabric.api.event.Event
 import net.minecraft.command.CommandSource
 import net.minecraft.server.command.CommandManager.RegistrationEnvironment
 import net.minecraft.server.command.ServerCommandSource
+import kotlin.properties.PropertyDelegateProvider
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KClass
 
 /**
  * Convenience method for registering a command.
@@ -110,4 +113,21 @@ inline fun Event<CommandRegistrationCallback>.register(namespace: String, enviro
  */
 inline fun <reified T> CommandContext<out CommandSource>.getArgument(name: String): T {
 	return getArgument(name, T::class.java)
+}
+
+/**
+ * Delegate provider for command arguments, allowing the syntax:
+ * ```kotlin
+ * val argumentName: String by arguments()
+ * ```
+ * Which is equivalent to:
+ * ```kotlin
+ * val argumentName: String = context.getArgument("argumentName", String::class.java)
+ * ```
+ */
+fun <T : Any> CommandContext<*>.arguments() = PropertyDelegateProvider<Nothing?, ReadOnlyProperty<Nothing?, T>> { _, property ->
+	@Suppress("UNCHECKED_CAST")
+	val kClass = property.returnType.classifier as? KClass<T> ?: throw IllegalArgumentException("Property '${property.name}' must have a KClass type")
+	val argument = this.getArgument(property.name, kClass.java)
+	ReadOnlyProperty { _, _ -> argument }
 }
