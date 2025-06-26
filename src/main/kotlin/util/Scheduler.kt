@@ -8,7 +8,6 @@ import me.ancientri.rimelib.RimeLib
 import me.ancientri.rimelib.util.Scheduler.AsynchronousTask.Companion.runAsyncTask
 import me.ancientri.rimelib.util.Scheduler.SynchronousTask.Companion.runSyncTask
 import me.ancientri.rimelib.util.events.ClientTickable
-import me.ancientri.symbols.init.AutoInit
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.MinecraftClient
@@ -17,7 +16,6 @@ import java.util.concurrent.CancellationException
 typealias AsyncTask = suspend CoroutineScope.() -> Unit
 typealias SyncTask = () -> Unit
 
-@AutoInit(-1)
 @Environment(EnvType.CLIENT)
 object Scheduler : ClientTickable() {
 	private var currentTick: UInt = 0u

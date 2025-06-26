@@ -11,7 +11,6 @@ kotlin = "2.1.20" # Match this to the one above
 loom = "1.10-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
 ksp = "2.1.20-1.0.32" #https://github.com/google/ksp/releases
 
-init = "1.0.1"
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
 apacheText = "1.13.1" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
@@ -30,9 +29,6 @@ apacheText = { module = "org.apache.commons:commons-text", version.ref = "apache
 pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" } # The main library module, this contains the bottom 2. But since loom doesn't include transitive dependencies, we need to include them separately.
 pods4k-core = { module = "com.danrusu.pods4k.immutable-arrays:core", version.ref = "pods4k" }
 pods4k-transformations = { module = "com.danrusu.pods4k.immutable-arrays:transformations-to-standard-collections", version.ref = "pods4k" }
-
-init-processor = { module = "me.ancientri.symbols:init-processor", version.ref = "init" }
-init-annotation = { module = "me.ancientri.symbols:init-annotation", version.ref = "init" }
 
 symbolProcessingApi = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }

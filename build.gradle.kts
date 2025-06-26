@@ -21,10 +21,7 @@ dependencies {
 	include(implementation(libs.apacheText.get())!!)
 
 	compileOnly(libs.mcdev)
-	compileOnly(libs.init.annotation)
 	compileOnly(project(":annotations"))
-
-	ksp(libs.init.processor)
 
 	api(libs.pods4k)
 	include(implementation(libs.pods4k.core.get())!!)
