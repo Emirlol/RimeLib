@@ -105,7 +105,7 @@ ${configClass.primaryConstructor!!.parameters.joinToString(separator = "\n") { p
 	}
 
 	companion object {
-		const val BUILDER_QUALIFIED_NAME = "me.ancientri.rimelib.config.api.ConfigBuilder"
+		const val BUILDER_QUALIFIED_NAME = "me.ancientri.rimelib.config.ConfigBuilder"
 
 		/**
 		 * A simple syntax highlighter for Kotlin code, using the IntelliJ IDEA's language injection feature.
