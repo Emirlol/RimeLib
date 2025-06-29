@@ -9,4 +9,6 @@ import me.ancientri.rimelib.config.ConfigBuilder
 /**
  * Convenience implementation that defaults to using [Cbor.Default] as the serialization format.
  */
-abstract class CborSerializerConfigManager<C : Any, B : ConfigBuilder<C>>(override val serialFormat: Cbor = Cbor.Default) : BinarySerializerConfigManager<C, B>()
+abstract class CborSerializerConfigManager<C : Any, B : ConfigBuilder<C>> : BinarySerializerConfigManager<C, B>() {
+	override val serialFormat: Cbor = Cbor.Default
+}

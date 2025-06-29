@@ -6,4 +6,6 @@ import me.ancientri.rimelib.config.ConfigBuilder
 /**
  * Convenience implementation that defaults to using [Json.Default] as the serialization format.
  */
-abstract class JsonSerializerConfigManager<C : Any, B : ConfigBuilder<C>>(override val serialFormat: Json = Json.Default) : StringSerializerConfigManager<C, B>()
+abstract class JsonSerializerConfigManager<C : Any, B : ConfigBuilder<C>> : StringSerializerConfigManager<C, B>() {
+	override val serialFormat: Json = Json.Default
+}
