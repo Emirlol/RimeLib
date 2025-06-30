@@ -7,7 +7,7 @@ package me.ancientri.rimelib.config
  *
  * @param C the type of the config to be built.
  */
-fun interface ConfigBuilder<C: Any> {
+fun interface ConfigBuilder<C : Any> {
 
 	/**
 	 * Creates a new instance of the config.

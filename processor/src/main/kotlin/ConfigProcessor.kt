@@ -78,7 +78,7 @@ package ${configClass.packageName.asString()}
  * It's recommended to use the modification methods in the config manager instead of this function,
  * but this function can still be useful for nested config situations where you have one main config object that has other configs as properties.
  * 
- * Nesting config objects is a necessary approach because data classes can only have up to 255 parameters in their primary constructor, and you'll have to nest them if you have more than that.
+ * Nesting config objects is a necessary approach because data classes can only have up to 255 parameters in their primary constructor (or worse, 16 for codecs), and you'll have to nest them if you have more than that.
  */
 inline fun ${classSimpleName}.update(builder: $generatedClassName.() -> Unit) = $generatedClassName(this).apply(builder).build()
 
