@@ -2,14 +2,11 @@ package util
 
 import me.ancientri.rimelib.util.color.ColorPalette
 import me.ancientri.rimelib.util.text.text
-import net.minecraft.Bootstrap
-import net.minecraft.SharedConstants
 import net.minecraft.text.ClickEvent.OpenUrl
 import net.minecraft.text.ClickEvent.RunCommand
 import net.minecraft.text.HoverEvent.ShowText
 import net.minecraft.text.Text
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import java.net.URI
 
@@ -68,14 +65,5 @@ class TextUtilTest {
 				}
 			}
 		)
-	}
-
-	companion object {
-		@BeforeAll
-		@JvmStatic
-		fun setupEnvironment() {
-			SharedConstants.createGameVersion()
-			Bootstrap.initialize()
-		}
 	}
 }
