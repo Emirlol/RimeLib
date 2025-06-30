@@ -41,7 +41,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 * Note that this doesn't save the config to the file automatically, so you should call [saveConfig] after modifying the config to persist changes.
 	 * @see modifyConfig
 	 */
-	abstract var config: C
+	var config: C
 		protected set
 
 	/**
