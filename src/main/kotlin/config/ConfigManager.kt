@@ -33,22 +33,24 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	abstract val configPath: Path
 
 	/**
+	 * The config object created with default values.
+	 * This will be used to initialize the config when the config file does not exist or is invalid.
+	 */
+	abstract val default: C
+
+	/**
 	 * The current configuration object.
 	 * This should be an immutable object that represents the current state of the configuration.
 	 * This doesn't mean the object itself doesn't hold any immutable data, but rather that care should be taken to not modify the data directly.
+	 *
+	 * This isn't initialized until [init] is called, which will load the config from the file or create a new one with default values if the file does not exist.
 	 *
 	 * For modifications, use the [modifyConfig] method which will return a new config instance.
 	 * Note that this doesn't save the config to the file automatically, so you should call [saveConfig] after modifying the config to persist changes.
 	 * @see modifyConfig
 	 */
-	var config: C
+	lateinit var config: C
 		protected set
-
-	/**
-	 * The config object created with default values.
-	 * This will be used to initialize the config when the config file does not exist or is invalid.
-	 */
-	abstract val default: C
 
 	/**
 	 * Convenience property to get the relative path of the config file from the config directory.
@@ -56,7 +58,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	val relativePath: Path
 		get() = FabricLoader.configDir.relativize(configPath)
 
-	init {
+	fun init() {
 		config = if (configPath.notExists()) {
 			logger.info("Config file {} does not exist, creating with default values.", relativePath)
 			saveConfig(default)
