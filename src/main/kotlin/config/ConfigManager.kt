@@ -69,7 +69,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 */
 	fun init() {
 		config = if (configPath.notExists()) {
-			logger.info("Config file {} does not exist, creating with default values.", relativePath)
+			logger.warn("Config file {} does not exist, creating with default values.", relativePath)
 			saveConfig(default)
 			default
 		} else when (val loadedConfig = loadConfig()) {
@@ -146,14 +146,14 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 */
 	fun saveConfig(config: C = this.config) {
 		logger.info("Saving config to file: {}", relativePath)
-		logger.debug("Encoding config: {}", config)
+		logger.devEnv { info("Encoding config: {}", config) }
 		val encoded = try {
 			encode(config)
 		} catch (e: Exception) {
 			logger.error("Failed to encode config for saving: {}", e.message, e)
 			return
 		}
-		logger.debug("Encoded config: {}", encoded)
+		logger.devEnv { info("Encoded config: {}", encoded) }
 		configPath.createParentDirectories()
 		configPath.outputStream().use { writer ->
 			try {
@@ -180,7 +180,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 			}
 		}
 
-		logger.debug("Read config data: {}", readResult)
+		logger.devEnv { info("Read config file: {}", readResult) }
 
 		val decoded = try {
 			decode(readResult)
@@ -189,7 +189,12 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 			return null
 		}
 
-		logger.debug("Decoded config: {}", decoded)
+		logger.devEnv { info("Decoded config: {}", decoded) }
 		return decoded
+	}
+
+	// I can't be bothered to write a proper xml file for debug logging, this will do for now
+	private inline fun Logger.devEnv(log: Logger.() -> Unit) {
+		if (FabricLoader.isDevelopmentEnvironment) log()
 	}
 }
