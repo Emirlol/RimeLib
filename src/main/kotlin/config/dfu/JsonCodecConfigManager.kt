@@ -18,7 +18,7 @@ abstract class JsonCodecConfigManager<C : Any, B : ConfigBuilder<C>> : CodecConf
 
 	override val ops: DynamicOps<JsonElement> = JsonOps.INSTANCE
 
-	override fun readFromStream(stream: InputStream): JsonElement = gson.fromJson(stream.bufferedReader(), JsonElement::class.java)
+	override fun readFromStream(stream: InputStream): JsonElement = stream.bufferedReader().use { gson.fromJson(it, JsonElement::class.java) }
 
-	override fun writeToStream(stream: OutputStream, data: JsonElement) = gson.toJson(data, stream.bufferedWriter())
+	override fun writeToStream(stream: OutputStream, data: JsonElement) = stream.bufferedWriter().use {gson.toJson(data, it) }
 }
