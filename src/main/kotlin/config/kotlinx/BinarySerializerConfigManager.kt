@@ -2,6 +2,8 @@ package me.ancientri.rimelib.config.kotlinx
 
 import kotlinx.serialization.BinaryFormat
 import me.ancientri.rimelib.config.ConfigBuilder
+import me.ancientri.rimelib.config.exceptions.DecodeException
+import me.ancientri.rimelib.config.exceptions.EncodeException
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -16,18 +18,16 @@ abstract class BinarySerializerConfigManager<C : Any, B : ConfigBuilder<C>> : Se
 	// Coerce the type to BinaryFormat by overriding
 	abstract override val serialFormat: BinaryFormat
 
-	override fun encode(config: C): ByteArray? = try {
+	override fun encode(config: C): ByteArray = try {
 		serialFormat.encodeToByteArray(serializer, config)
 	} catch (e: Exception) {
-		logger.error("Failed to encode config to string: ${e.message}", e)
-		null
+		throw EncodeException(e)
 	}
 
-	override fun decode(data: ByteArray): C? = try {
+	override fun decode(data: ByteArray): C = try {
 		serialFormat.decodeFromByteArray(serializer, data)
 	} catch (e: Exception) {
-		logger.error("Failed to decode config from string: ${e.message}", e)
-		null
+		throw DecodeException(e)
 	}
 
 	override fun writeToStream(stream: OutputStream, data: ByteArray) = stream.write(data)

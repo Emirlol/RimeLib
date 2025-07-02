@@ -1,5 +1,7 @@
 package me.ancientri.rimelib.config
 
+import me.ancientri.rimelib.config.exceptions.DecodeException
+import me.ancientri.rimelib.config.exceptions.EncodeException
 import me.ancientri.rimelib.util.FabricLoader
 import me.ancientri.symbols.config.ConfigClass
 import org.slf4j.Logger
@@ -65,7 +67,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 			default
 		} else when (val loadedConfig = loadConfig()) {
 			null -> {
-				logger.warn("Config file {} is invalid or could not be loaded, using default values.", relativePath)
+				logger.warn("Config file {} could not be loaded, using default values.", relativePath)
 				default
 			}
 
@@ -99,15 +101,17 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 * Encodes the provided config object into an intermediary representation.
 	 * @param config The config object to encode.
 	 * @return The intermediary representation of the config, which can be written to a file.
+	 * @throws [EncodeException] if the config could not be encoded into the intermediary representation.
 	 */
-	abstract fun encode(config: C): F?
+	abstract fun encode(config: C): F
 
 	/**
 	 * Decodes the provided intermediary data into a config object.
 	 * @param data The intermediary representation of the config.
-	 * @return The decoded config object, or null if the data is invalid or cannot be decoded.
+	 * @return The decoded config object.
+	 * @throws [DecodeException] if the data could not be decoded into a config object.
 	 */
-	abstract fun decode(data: F): C?
+	abstract fun decode(data: F): C
 
 	/**
 	 * Modifies the current config using the provided builder function and returns the updated config.
@@ -133,26 +137,31 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 * Saves the current configuration to the file.
 	 * This method should be called after modifying the config to persist changes.
 	 */
-	fun saveConfig(config: C = this.config) = when (val encoded = encode(config)) {
-		null -> {
-			logger.error("Failed to encode config.")
+	fun saveConfig(config: C = this.config) {
+		val encoded = try {
+			encode(config)
+		} catch (e: Exception) {
+			logger.error("Failed to encode config for saving: {}", e.message, e)
+			return
 		}
-
-		else -> {
-			configPath.createParentDirectories()
-			configPath.outputStream().use { writer ->
-				writeToStream(writer, encoded)
-			}
+		configPath.createParentDirectories()
+		configPath.outputStream().use { writer ->
+			writeToStream(writer, encoded)
 		}
 	}
 
 	/**
 	 * Loads the configuration from the file.
-	 * @return The loaded configuration object, or null if the file could not be loaded or is invalid.
+	 * @return The loaded configuration object, or null if the file doesn't exist.
 	 */
 	fun loadConfig(): C? = when {
 		configPath.exists() -> configPath.inputStream().use { reader ->
-			decode(readFromStream(reader))
+			try {
+				decode(readFromStream(reader))
+			} catch (e: Exception) {
+				logger.error("Failed to decode config from file {}: {}", relativePath, e.message, e)
+				null
+			}
 		}
 
 		else -> null
