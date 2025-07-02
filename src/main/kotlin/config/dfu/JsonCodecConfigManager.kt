@@ -3,7 +3,6 @@ package me.ancientri.rimelib.config.dfu
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.JsonOps
@@ -19,7 +18,7 @@ abstract class JsonCodecConfigManager<C : Any, B : ConfigBuilder<C>> : CodecConf
 
 	override val ops: DynamicOps<JsonElement> = JsonOps.INSTANCE
 
-	override fun readFromStream(stream: InputStream): JsonObject = gson.fromJson(stream.bufferedReader(), JsonObject::class.java)
+	override fun readFromStream(stream: InputStream): JsonElement = gson.fromJson(stream.bufferedReader(), JsonElement::class.java)
 
 	override fun writeToStream(stream: OutputStream, data: JsonElement) = gson.toJson(data, stream.bufferedWriter())
 }

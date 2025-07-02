@@ -8,7 +8,10 @@ import org.slf4j.Logger
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
-import kotlin.io.path.*
+import kotlin.io.path.createParentDirectories
+import kotlin.io.path.inputStream
+import kotlin.io.path.notExists
+import kotlin.io.path.outputStream
 
 /**
  * A generic abstract class for managing configurations in a mod.
@@ -60,6 +63,10 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	val relativePath: Path
 		get() = FabricLoader.configDir.relativize(configPath)
 
+	/**
+	 * Initializes the config object by loading it from the file or creating a new one with default values if the file does not exist.
+	 * This method should be called once at the start of the application to ensure that the config is loaded and ready to use.
+	 */
 	fun init() {
 		config = if (configPath.notExists()) {
 			logger.info("Config file {} does not exist, creating with default values.", relativePath)
@@ -138,32 +145,51 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 * This method should be called after modifying the config to persist changes.
 	 */
 	fun saveConfig(config: C = this.config) {
+		logger.info("Saving config to file: {}", relativePath)
+		logger.debug("Encoding config: {}", config)
 		val encoded = try {
 			encode(config)
 		} catch (e: Exception) {
 			logger.error("Failed to encode config for saving: {}", e.message, e)
 			return
 		}
+		logger.debug("Encoded config: {}", encoded)
 		configPath.createParentDirectories()
 		configPath.outputStream().use { writer ->
-			writeToStream(writer, encoded)
+			try {
+				writeToStream(writer, encoded)
+			} catch (e: Exception) {
+				logger.error("Failed to write config to file {}: {}", relativePath, e.message, e)
+			}
 		}
 	}
 
 	/**
 	 * Loads the configuration from the file.
-	 * @return The loaded configuration object, or null if the file doesn't exist.
+	 * @return The loaded configuration object, or `null` if the could not be read for some reason.
 	 */
-	fun loadConfig(): C? = when {
-		configPath.exists() -> configPath.inputStream().use { reader ->
+	fun loadConfig(): C? {
+		if (configPath.notExists()) return null
+
+		val readResult = configPath.inputStream().use { reader ->
 			try {
-				decode(readFromStream(reader))
+				readFromStream(reader)
 			} catch (e: Exception) {
-				logger.error("Failed to decode config from file {}: {}", relativePath, e.message, e)
-				null
+				logger.error("Failed to read file {}: {}", relativePath, e.message, e)
+				return null
 			}
 		}
 
-		else -> null
+		logger.debug("Read config data: {}", readResult)
+
+		val decoded = try {
+			decode(readResult)
+		} catch (e: Exception) {
+			logger.error("Failed to decode config from file {}: {}", relativePath, e.message, e)
+			return null
+		}
+
+		logger.debug("Decoded config: {}", decoded)
+		return decoded
 	}
 }
