@@ -20,5 +20,5 @@ abstract class JsonCodecConfigManager<C : Any, B : ConfigBuilder<C>> : CodecConf
 
 	override fun readFromStream(stream: InputStream): JsonElement = stream.bufferedReader().use { gson.fromJson(it, JsonElement::class.java) }
 
-	override fun writeToStream(stream: OutputStream, data: JsonElement) = stream.bufferedWriter().use {gson.toJson(data, it) }
+	override fun writeToStream(stream: OutputStream, data: JsonElement) = stream.bufferedWriter().use { gson.toJson(data, it) }
 }

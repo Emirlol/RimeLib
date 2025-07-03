@@ -17,6 +17,7 @@ abstract class CodecConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> : Conf
 	 * The codec used for encoding and decoding the config.
 	 */
 	abstract val codec: Codec<C>
+
 	/**
 	 * The dynamic operations used for encoding and decoding.
 	 */

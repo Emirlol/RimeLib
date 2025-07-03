@@ -21,7 +21,6 @@ import me.ancientri.rimelib.util.color.ColorPalette.TEXT
  * | Meh gray                               | [SURFACE1] |
  */
 object ColorPalette { // The official java package for catppuccin colors sucks so this is my solution. It doesn't have all 4 palettes but it's good enough.
-
 	val ROSEWATER = Color.opaque(0xf5e0dc)
 	val FLAMINGO = Color.opaque(0xf2cdcd)
 	val PINK = Color.opaque(0xf5c2e7)
