@@ -10,22 +10,50 @@ import net.minecraft.text.*
 import net.minecraft.util.Formatting
 
 // region Text creation utilities
+/**
+ * Creates a plain [MutableText] with the given [String] as its content.
+ */
 inline val String.text get(): MutableText = Text.literal(this)
 
+/**
+ * Creates a [MutableText] with the given [String] as its content, applying the given [formatting] to the style.
+ *
+ * @param formatting The formatting to apply to the text.
+ */
 inline fun String.text(formatting: Formatting): MutableText = text.formatted(formatting)
 
+/**
+ * Creates a [MutableText] with the given [String] as its content, applying the given [color] to the style.
+ *
+ * @param color The color to apply to the text, represented as an integer ARGB value.
+ */
 inline fun String.text(color: Int): MutableText = text.withColor(color)
 
+/**
+ * Creates a [MutableText] with the given [String] as its content, applying the given [color] to the style.
+ *
+ * @param color The color to apply to the text, represented as a [Color] object.
+ */
 inline fun String.text(color: Color): MutableText = text.withColor(color.value)
 
+/**
+ * Creates a [MutableText] with the given [String] as its content, styled with the given [style].
+ *
+ * @param style The style to apply to the text, which can include color, formatting, and other style properties.
+ */
 inline fun String.text(style: Style): MutableText = text.setStyle(style)
 
+/**
+ * Creates a [MutableText] with the given [String] as its content, applying the given [builder] to the style.
+ *
+ * This allows you to use a [StyleBuilder] to create a more complex style for the text.
+ *
+ * @param builder A lambda that receives a [StyleBuilder] to configure the style of the text.
+ */
 inline fun String.text(builder: StyleBuilder.() -> Unit): MutableText = text.apply { style = StyleBuilder().apply(builder).build() }
 
 /**
  * Creates a [TranslatableTextContent] with the given this string as the key, and no arguments.
- *
- * This is meant for use in [TextBuilder], so you can create translatable text with style and children easily.
  *
  * @receiver The key of the translatable text, which is usually a translation key in the language files.
  * @return A [TranslatableTextContent] with the given key and no arguments.
@@ -37,21 +65,56 @@ inline val String.translatable get(): TranslatableTextContent = TranslatableText
  *
  * The only allowed placeholder in the key is `%s`, which will either be replaced with a [Text] object or the result of the object's [toString()][Any.toString] method.
  *
- * This is meant for use in [TextBuilder], so you can create translatable text with style and children easily.
- *
  * @receiver The key of the translatable text, which is usually a translation key in the language files.
  * @return A [TranslatableTextContent] with the given key and arguments.
  */
 inline fun String.translatable(vararg args: Any) = TranslatableTextContent(this, null, args)
 
-inline fun TextContent.text(color: Int): MutableText = MutableText(this, ObjectArrayList(), Style.EMPTY.withColor(color))
+/**
+ * Convenience function to create a [MutableText] with the given [content], [style], and [children].
+ */
+inline fun mutableTextOf(content: TextContent, style: Style = Style.EMPTY, children: List<Text> = ObjectArrayList()): MutableText = MutableText(content, children, style)
 
+/**
+ * Convenience function to create a [MutableText] with this text content.
+ */
+inline val TextContent.text: MutableText get() = mutableTextOf(this)
+
+/**
+ * Creates a [MutableText] with this text content, applying the given [color] to the style.
+ *
+ * @param color The color to apply to the text, represented as an integer ARGB value.
+ */
+inline fun TextContent.text(color: Int): MutableText = mutableTextOf(this, Style.EMPTY.withColor(color))
+
+/**
+ * Creates a [MutableText] with this text content, applying the given [color] to the style.
+ *
+ * @param color The color to apply to the text, represented as a [Color] object.
+ */
 inline fun TextContent.text(color: Color): MutableText = text(color.value)
 
-inline fun TextContent.text(formatting: Formatting): MutableText = MutableText(this, ObjectArrayList(), Style.EMPTY.withFormatting(formatting))
+/**
+ * Creates a [MutableText] with this text content, applying the given [formatting] to the style.
+ *
+ * @param formatting The formatting to apply to the text.
+ */
+inline fun TextContent.text(formatting: Formatting): MutableText = mutableTextOf(this, Style.EMPTY.withFormatting(formatting))
 
-inline fun TextContent.text(style: Style): MutableText = MutableText(this, ObjectArrayList(), style)
+/**
+ * Creates a [MutableText] with this text content and the given [style].
+ *
+ * @param style The style to apply to the text, which can include color, formatting, and other style properties.
+ */
+inline fun TextContent.text(style: Style): MutableText = mutableTextOf(this, style)
 
+/**
+ * Creates a [MutableText] with this text content, applying the given [builder] to the style.
+ *
+ * This allows you to use a [StyleBuilder] to create a more complex style for the text.
+ *
+ * @param builder A lambda that receives a [StyleBuilder] to configure the style of the text.
+ */
 inline fun TextContent.text(builder: StyleBuilder.() -> Unit): MutableText = text(StyleBuilder().apply(builder).build())
 
 /**
