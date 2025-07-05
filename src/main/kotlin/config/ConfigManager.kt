@@ -121,19 +121,32 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	abstract fun decode(data: F): C
 
 	/**
-	 * Modifies the current config using the provided builder function and returns the updated config.
+	 * Sets the current config to the result of building the provided [ConfigBuilder][B].
 	 *
-	 * Note that this function **does not** save the changes to the config file.
-	 * @see updateConfig
+	 * This is meant for usage in GUI applications where the config is modified however the user wants and then saved all at once.
+	 *
+	 *
+	 * @return The current config object after applying the builder.
+	 *
 	 */
-	fun modifyConfig(builder: B.() -> Unit): C {
-		config = this.builder(config).apply(builder).build()
+	fun applyBuilder(builder: B): C {
+		config = builder.build()
 		return config
 	}
 
 	/**
+	 * Modifies the current config using the provided builder function and returns the updated config.
+	 *
+	 * Note that this function **does not** save the changes to the config file.
+	 * @return The updated config object after applying the builder.
+	 * @see updateConfig
+	 */
+	fun modifyConfig(builder: B.() -> Unit): C = applyBuilder(builder(config).apply(builder))
+
+	/**
 	 * Modifies the current config using the provided builder function and saves the changes to the config file.
 	 * @param builder A lambda function that takes a [B] (config builder) and modifies it.
+	 * @return The updated config object after applying the builder and saving it to the file.
 	 */
 	fun updateConfig(builder: B.() -> Unit): C {
 		saveConfig(modifyConfig(builder))
