@@ -1,9 +1,9 @@
 [versions]
 # https://fabricmc.net/develop/
-minecraft = "1.21.7"
-yarnMappings = "1.21.7+build.2"
+minecraft = "1.21.5"
+yarnMappings = "1.21.5+build.1"
 fabricLoader = "0.16.14"
-fabricApi = "0.128.2+1.21.7"
+fabricApi = "0.128.1+1.21.5"
 
 fabricLanguageKotlin = "1.13.4+kotlin.2.2.0" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
