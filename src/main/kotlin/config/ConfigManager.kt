@@ -1,9 +1,13 @@
 package me.ancientri.rimelib.config
 
+import me.ancientri.rimelib.config.events.OnLoad
+import me.ancientri.rimelib.config.events.OnSave
 import me.ancientri.rimelib.config.exceptions.DecodeException
 import me.ancientri.rimelib.config.exceptions.EncodeException
+import me.ancientri.rimelib.util.EventUtil
 import me.ancientri.rimelib.util.FabricLoader
 import me.ancientri.symbols.config.ConfigClass
+import net.fabricmc.fabric.api.event.Event
 import org.slf4j.Logger
 import java.io.InputStream
 import java.io.OutputStream
@@ -64,6 +68,28 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 		get() = FabricLoader.configDir.relativize(configPath)
 
 	/**
+	 * Event that is fired when the config is saved.
+	 */
+	val ON_SAVE: Event<OnSave> = EventUtil.createArrayBacked { listeners ->
+		OnSave {
+			for (listener in listeners) {
+				listener.onSave()
+			}
+		}
+	}
+
+	/**
+	 * Event that is fired when the config is loaded with the loaded config object.
+	 */
+	val ON_LOAD: Event<OnLoad<C>> = EventUtil.createArrayBacked { listeners ->
+		OnLoad { config ->
+			for (listener in listeners) {
+				listener.onLoad(config)
+			}
+		}
+	}
+
+	/**
 	 * Initializes the config object by loading it from the file or creating a new one with default values if the file does not exist.
 	 * This method should be called once at the start of the application to ensure that the config is loaded and ready to use.
 	 */
@@ -83,6 +109,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 				loadedConfig
 			}
 		}
+		ON_LOAD.invoker().onLoad(config)
 	}
 
 	/**
