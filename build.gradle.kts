@@ -9,7 +9,11 @@ plugins {
 }
 
 group = properties["group"] as String
-version = "${properties["version"]}+${libs.versions.minecraft.get()}"
+version = if (hasProperty("snapshot")) {
+	"${properties["version"]}+${libs.versions.minecraft.get()}-SNAPSHOT"
+} else {
+	"${properties["version"]}+${libs.versions.minecraft.get()}"
+}
 
 dependencies {
 	minecraft(libs.minecraft)
@@ -100,14 +104,19 @@ tasks {
 
 publishing {
 	repositories {
-		maven("https://ancientri.me/maven/releases") {
+		maven {
 			name = "AncientRime"
+			url = uri(
+				if (project.hasProperty("snapshot")) "https://ancientri.me/maven/snapshots"
+				else "https://ancientri.me/maven/releases"
+			)
 			credentials(PasswordCredentials::class)
 			authentication {
 				create<BasicAuthentication>("basic")
 			}
 		}
 	}
+
 	publications {
 		create<MavenPublication>("maven") {
 			groupId = project.group as String
