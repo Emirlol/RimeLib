@@ -19,10 +19,7 @@ class LoggerFactory(private val prefix: String) {
 	 *
 	 * @param name The name of the logger.
 	 */
-	fun createLogger(name: String): Logger {
-		val logger = LoggerFactory.getLogger(name)
-		return createMdcProxy(logger)
-	}
+	fun createLogger(name: String): Logger = createMdcProxy(LoggerFactory.getLogger(name))
 
 	/**
 	 * Creates a logger with the name of the class.
