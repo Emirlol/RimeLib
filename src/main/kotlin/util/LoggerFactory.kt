@@ -22,7 +22,10 @@ class LoggerFactory(private val prefix: String) {
 	 */
 	fun createLogger(name: String): Logger {
 		val logger = LoggerFactory.getLogger("$prefix | $name")
-		if (FabricLoader.isDevelopmentEnvironment) Configurator.setLevel(logger.name, Level.DEBUG)
+		if (FabricLoader.isDevelopmentEnvironment && logger is org.apache.logging.log4j.Logger) {
+			logger.info("Level set to DEBUG")
+			Configurator.setLevel(logger.name, Level.DEBUG)
+		}
 		return logger
 	}
 
@@ -31,19 +34,19 @@ class LoggerFactory(private val prefix: String) {
 	 *
 	 * @param clazz The class to create the logger for.
 	 */
-	inline fun createLogger(clazz: KClass<*>): Logger = createLogger(clazz.qualifiedName!!)
+	inline fun createLogger(clazz: KClass<*>): Logger = createLogger(clazz.simpleName!!)
 
 	/**
 	 * Creates a logger with the name of the class.
 	 *
 	 * @param clazz The class to create the logger for.
 	 */
-	inline fun createLogger(clazz: Class<*>): Logger = createLogger(clazz.name)
+	inline fun createLogger(clazz: Class<*>): Logger = createLogger(clazz.simpleName)
 
 	/**
 	 * Creates a logger with the name of the class.
 	 *
 	 * @param this The class to create the logger for.
 	 */
-	inline fun createLogger(`this`: Any): Logger = createLogger(`this`::class.qualifiedName!!)
+	inline fun createLogger(`this`: Any): Logger = createLogger(`this`::class.simpleName!!)
 }
