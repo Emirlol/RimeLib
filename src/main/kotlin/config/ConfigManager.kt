@@ -186,14 +186,14 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 	 */
 	fun saveConfig(config: C = this.config) {
 		logger.info("Saving config to file: {}", relativePath)
-		logger.devEnv { info("Encoding config: {}", config) }
+		logger.debug("Encoding config: {}", config)
 		val encoded = try {
 			encode(config)
 		} catch (e: Exception) {
 			logger.error("Failed to encode config for saving: {}", e.message, e)
 			return
 		}
-		logger.devEnv { info("Encoded config: {}", encoded) }
+		logger.debug("Encoded config: {}", encoded)
 		configPath.createParentDirectories()
 		configPath.outputStream().use { writer ->
 			try {
@@ -220,7 +220,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 			}
 		}
 
-		logger.devEnv { info("Read config file: {}", readResult) }
+		logger.debug("Read config file: {}", readResult)
 
 		val decoded = try {
 			decode(readResult)
@@ -229,12 +229,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 			return null
 		}
 
-		logger.devEnv { info("Decoded config: {}", decoded) }
+		logger.debug("Decoded config: {}", decoded)
 		return decoded
-	}
-
-	// I can't be bothered to write a proper xml file for debug logging, this will do for now
-	private inline fun Logger.devEnv(log: Logger.() -> Unit) {
-		if (FabricLoader.isDevelopmentEnvironment) log()
 	}
 }
