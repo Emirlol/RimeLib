@@ -3,7 +3,10 @@
 package me.ancientri.rimelib.util
 
 import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.core.config.Configurator
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.core.LoggerContext
+import org.apache.logging.log4j.core.config.LoggerConfig
+import org.apache.logging.slf4j.Log4jLogger
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
@@ -16,15 +19,28 @@ import kotlin.reflect.KClass
 class LoggerFactory(private val prefix: String) {
 	/**
 	 * Creates a logger with the given name, prefixed with the provided prefix.
-	 * This logger will be set to DEBUG level in development environments for convenience.
+	 * This logger will be set to DEBUG level in development environments (when launched via loom or with a debug flag) for convenience.
 	 *
 	 * @param name The name of the logger.
 	 */
 	fun createLogger(name: String): Logger {
 		val logger = LoggerFactory.getLogger("$prefix | $name")
-		if (FabricLoader.isDevelopmentEnvironment && logger is org.apache.logging.log4j.Logger) {
-			logger.info("Level set to DEBUG")
-			Configurator.setLevel(logger.name, Level.DEBUG)
+
+		if (Debug.isEnabled && logger is Log4jLogger) {
+			val ctx = LogManager.getContext(false) as LoggerContext
+			var loggerConfig = ctx.configuration.getLoggerConfig(logger.name)
+			if (loggerConfig.name != logger.name) {
+				loggerConfig = LoggerConfig(logger.name, Level.DEBUG, true)
+				val rootLoggerConfig = ctx.configuration.rootLogger
+				for ((key, appender) in rootLoggerConfig.appenders) {
+					if (key != "SysOut" && key != "DebugFile" && key != "LatestFile") continue
+					loggerConfig.addAppender(appender, Level.ALL, null)
+				}
+				ctx.configuration.addLogger(logger.name, loggerConfig)
+			} else {
+				loggerConfig.level = Level.DEBUG
+			}
+			ctx.updateLoggers()
 		}
 		return logger
 	}
