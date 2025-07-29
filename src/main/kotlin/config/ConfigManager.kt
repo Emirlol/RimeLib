@@ -206,7 +206,7 @@ abstract class ConfigManager<C : Any, B : ConfigBuilder<C>, F : Any> {
 
 	/**
 	 * Loads the configuration from the file.
-	 * @return The loaded configuration object, or `null` if the could not be read for some reason.
+	 * @return The loaded configuration object, or `null` if the file could not be read for some reason.
 	 */
 	fun loadConfig(): C? {
 		if (configPath.notExists()) return null
