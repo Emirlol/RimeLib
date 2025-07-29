@@ -19,26 +19,25 @@ import kotlin.reflect.KClass
  *
  * Example usage:
  * ```kotlin
- * ClientCommandRegistrationCallback.EVENT.register("namespace") {
- *     literal("example") {
- *         literal("subcommand") {
- *             executes { // Explicitly defined `executes`
- *                 player?.sendText("This is a subcommand!".text(ColorPalette.TEXT))
- *             }
- *         }
- *         literal("subcommand2") executes { // Infix notation for `executes` for shorter syntax leaf nodes.
- *             player?.sendText("Hello".text)
- *         }
- *         argument("subcommand2", StringArgumentType.word()) executes {
- *             player?.sendText {
- *                 +"Hello ".text(ColorPalette.TEXT)
- *                 +it.getArgument<String>("subcommand2").text(ColorPalette.MAUVE)
- *                 +"!".text(ColorPalette.TEXT)
- *             }
- *             Command.SINGLE_SUCCESS // Explicit success return value. This is optional via an `executes` overload.
- *         }
- *     }
- * }
+  ClientCommandRegistrationCallback.EVENT.register("namespace") {
+      literal("example") {
+          literal("subcommand") {
+              executes {
+                  player?.sendText("This is a subcommand!".text(ColorPalette.TEXT))
+              }
+          }
+          argument("subcommand2", StringArgumentType.word()) {
+              executes {
+                  val argument: String by arguments()
+                  player?.sendText {
+                      "Hello " colored ColorPalette.TEXT
+                      argument colored ColorPalette.MAUVE
+                      "!" colored ColorPalette.TEXT
+                  }
+              }
+          }
+      }
+  }
  * ```
  *
  * Which will result in the following commands:
@@ -65,20 +64,19 @@ inline fun Event<ClientCommandRegistrationCallback>.register(namespace: String, 
  * CommandRegistrationCallback.EVENT.register("namespace") {
  *     literal("example") {
  *         literal("subcommand") {
- *             executes { // Explicitly defined `executes`
+ *             executes {
  *                 player?.sendText("This is a subcommand!".text(ColorPalette.TEXT))
  *             }
  *         }
- *         literal("subcommand2") executes { // Infix notation for `executes` for shorter syntax leaf nodes.
- *             player?.sendText("Hello".text)
- *         }
- *         argument("subcommand3", StringArgumentType.word()) executes {
- *             player?.sendText {
- *                 +"Hello ".text(ColorPalette.TEXT)
- *                 +it.getArgument<String>("subcommand2").text(ColorPalette.MAUVE)
- *                 +"!".text(ColorPalette.TEXT)
+ *         argument("subcommand3", StringArgumentType.word()) {
+ *             executes {
+ *                 val subcommand3: String by arguments()
+ *                 player?.sendText {
+ *                     "Hello " colored ColorPalette.TEXT
+ *                     subcommand3 colored ColorPalette.MAUVE
+ *                     "!" colored ColorPalette.TEXT
+ *                 }
  *             }
- *             Command.SINGLE_SUCCESS // Explicit success return value. This is optional via an `executes` overload.
  *         }
  *     }
  * }
