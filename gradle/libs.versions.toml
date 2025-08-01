@@ -8,7 +8,7 @@ fabricApi = "0.128.2+1.21.7"
 fabricLanguageKotlin = "1.13.4+kotlin.2.2.0" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
 kotlin = "2.2.0" # Match this to the one above
-loom = "1.10-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
+loom = "1.11-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
 ksp = "2.2.0-2.0.2" #https://github.com/google/ksp/releases
 
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
