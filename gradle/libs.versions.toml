@@ -12,7 +12,6 @@ loom = "1.11-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
 ksp = "2.2.0-2.0.2" #https://github.com/google/ksp/releases
 
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
-apacheText = "1.13.1" # https://mvnrepository.com/artifact/org.apache.commons/commons-text
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
 kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet/releases/
 
@@ -25,7 +24,6 @@ fabricLanguageKotlin = { module = "net.fabricmc:fabric-language-kotlin", version
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 
 mcdev = { module = "com.demonwav.mcdev:annotations", version.ref = "mcdev" }
-apacheText = { module = "org.apache.commons:commons-text", version.ref = "apacheText" }
 pods4k = { module = "com.danrusu.pods4k:pods4k", version.ref = "pods4k" } # The main library module, this contains the bottom 2. But since loom doesn't include transitive dependencies, we need to include them separately.
 pods4k-core = { module = "com.danrusu.pods4k.immutable-arrays:core", version.ref = "pods4k" }
 pods4k-transformations = { module = "com.danrusu.pods4k.immutable-arrays:transformations-to-standard-collections", version.ref = "pods4k" }

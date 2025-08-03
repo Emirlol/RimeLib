@@ -22,8 +22,6 @@ dependencies {
 	modImplementation(libs.fabricApi)
 	modImplementation(libs.fabricLanguageKotlin)
 
-	include(implementation(libs.apacheText.get())!!)
-
 	compileOnly(libs.mcdev)
 	compileOnly(project(":annotations"))
 
