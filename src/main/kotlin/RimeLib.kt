@@ -2,7 +2,7 @@ package me.ancientri.rimelib
 
 import me.ancientri.rimelib.util.CoroutineUtil
 import me.ancientri.rimelib.util.LoggerFactory
-import me.ancientri.rimelib.util.Scheduler
+import me.ancientri.rimelib.util.scheduler.Scheduler
 import net.minecraft.util.Identifier
 
 object RimeLib {
