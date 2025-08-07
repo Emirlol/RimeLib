@@ -7,6 +7,8 @@ import com.danrusu.pods4k.immutableArrays.ImmutableFloatArray
 import com.danrusu.pods4k.immutableArrays.immutableArrayOf
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.PrimitiveCodec
+import net.minecraft.text.TextColor
+import net.minecraft.util.Formatting
 
 /**
  * Represents a color in ARGB format, where each channel (alpha, red, green, blue) is an 8-bit integer packed into a single 32-bit integer.
@@ -78,6 +80,27 @@ value class Color(val value: Int) {
 		fun opaque(value: Int): Color = Color(value or 0xFF000000.toInt())
 
 		fun transparent(value: Int): Color = Color(value and 0x00FFFFFF)
+
+		/**
+		 * Converts a Minecraft Formatting to a Color instance.
+		 * @receiver The Formatting to convert.
+		 * @return A Color instance representing the Formatting, or null if it is not a color.
+		 */
+		fun Formatting.toColor(): Color? = if (this.isColor) Color(this.colorValue!!) else null
+
+		/**
+		 * Converts a Minecraft TextColor to a Color instance.
+		 * @receiver The TextColor to convert.
+		 * @return A Color instance representing the TextColor.
+		 */
+		fun TextColor.toColor(): Color = Color(this.rgb or 0xFF000000.toInt())
+
+		/**
+		 * Converts a Java AWT color to a Color instance.
+		 * @receiver The AWT color to convert.
+		 * @return A Color instance representing the AWT color.
+		 */
+		fun java.awt.Color.toColor(): Color = Color(this.rgb)
 
 		/**
 		 * Creates a color from the given RGB integer values with full opacity (alpha = 255).
