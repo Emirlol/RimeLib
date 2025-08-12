@@ -3,7 +3,10 @@
 package me.ancientri.rimelib.util.text
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import me.ancientri.rimelib.util.client
 import me.ancientri.rimelib.util.color.Color
+import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.hud.ChatHud
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.*
@@ -194,5 +197,15 @@ inline fun PlayerEntity.sendText(builder: TextBuilder.() -> Unit) = sendText(tex
  * This allows the use of the trailing lambda syntax with the [TextBuilder] in a reader-friendly way.
  */
 inline fun ChatHud.addMessage(builder: TextBuilder.() -> Unit) = addMessage(text(builder))
+
+inline fun DrawContext.drawText(x: Int, y: Int, color: Int = -1, shadow: Boolean = true, builder: TextBuilder.() -> Unit) = drawText(client.textRenderer, x, y, color, shadow, builder)
+
+// Explicit overload for textRenderer to match positional arguments of the original drawText methods
+inline fun DrawContext.drawText(textRenderer: TextRenderer, x: Int, y: Int, color: Int = -1, shadow: Boolean = true, builder: TextBuilder.() -> Unit) = drawText(textRenderer, text(builder), x, y, color, shadow)
+
+inline fun DrawContext.drawCenteredText(x: Int, y: Int, color: Int = -1, shadow: Boolean = true, builder: TextBuilder.() -> Unit) = drawText(x - client.textRenderer.getWidth(text(builder)) / 2, y, color, shadow, builder)
+
+// Explicit overload for textRenderer to match positional arguments of the original drawCenteredText methods
+inline fun DrawContext.drawCenteredText(textRenderer: TextRenderer, x: Int, y: Int, color: Int = -1, shadow: Boolean = true, builder: TextBuilder.() -> Unit) = drawText(textRenderer, x - textRenderer.getWidth(text(builder)) / 2, y, color, shadow, builder)
 
 // endregion
