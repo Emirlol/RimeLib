@@ -16,7 +16,7 @@ import net.minecraft.util.Formatting
 /**
  * Creates a plain [MutableText] with the given [String] as its content.
  */
-inline val String.text get(): MutableText = Text.literal(this)
+inline val String.text: MutableText get(): MutableText = Text.literal(this)
 
 /**
  * Creates a [MutableText] with the given [String] as its content, applying the given [formatting] to the style.
@@ -61,7 +61,7 @@ inline fun String.text(builder: StyleBuilder.() -> Unit): MutableText = text.app
  * @receiver The key of the translatable text, which is usually a translation key in the language files.
  * @return A [TranslatableTextContent] with the given key and no arguments.
  */
-inline val String.translatable get(): TranslatableTextContent = TranslatableTextContent(this, null, TranslatableTextContent.EMPTY_ARGUMENTS)
+inline val String.translatable: TranslatableTextContent get(): TranslatableTextContent = TranslatableTextContent(this, null, TranslatableTextContent.EMPTY_ARGUMENTS)
 
 /**
  * Creates a [TranslatableTextContent] with this string as the key and [args].
@@ -71,7 +71,7 @@ inline val String.translatable get(): TranslatableTextContent = TranslatableText
  * @receiver The key of the translatable text, which is usually a translation key in the language files.
  * @return A [TranslatableTextContent] with the given key and arguments.
  */
-inline fun String.translatable(vararg args: Any) = TranslatableTextContent(this, null, args)
+inline fun String.translatable(vararg args: Any): TranslatableTextContent = TranslatableTextContent(this, null, args)
 
 /**
  * Convenience function to create a [MutableText] with the given [content], [style], and [children].
@@ -125,14 +125,14 @@ inline fun TextContent.text(builder: StyleBuilder.() -> Unit): MutableText = tex
  *
  * This will cause the root text to have no content, and the children won't inherit the style from the root text.
  */
-inline fun text(builder: TextBuilder.() -> Unit) = text(PlainTextContent.EMPTY, Style.EMPTY, builder)
+inline fun text(builder: TextBuilder.() -> Unit): MutableText = text(PlainTextContent.EMPTY, Style.EMPTY, builder)
 
 /**
  * Creates an empty-wrapped [MutableText] with the given [style] and [builder].
  *
  * There will be no content in the root text, but there will be a style applied to all children that are missing a style.
  */
-inline fun text(style: Style, builder: TextBuilder.() -> Unit) = text(PlainTextContent.EMPTY, style, builder)
+inline fun text(style: Style, builder: TextBuilder.() -> Unit): MutableText = text(PlainTextContent.EMPTY, style, builder)
 
 /**
  * Creates a [MutableText] with the given [content] and [style], applying the [builder] on it.
@@ -172,7 +172,17 @@ inline fun text(string: String, formatting: Formatting, builder: TextBuilder.() 
  *
  * This is useful for editing an existing text without having to create a new one.
  */
-inline fun text(initial: Text, builder: TextBuilder.() -> Unit) = TextBuilder(initial).apply(builder).build()
+inline fun text(initial: Text, builder: TextBuilder.() -> Unit): MutableText = TextBuilder(initial).apply(builder).build()
+
+/**
+ * Applies a new style to the given [MutableText] instance via the [builder], overriding any existing style.
+ */
+inline fun MutableText.withStyle(builder: StyleBuilder.() -> Unit): MutableText = apply { style = StyleBuilder().apply(builder).build() }
+
+/**
+ * Updates the existing style of the [MutableText] instance with a [builder].
+ */
+inline fun MutableText.styled(builder: StyleBuilder.() -> Unit): MutableText = apply { style = StyleBuilder(style).apply(builder).build() }
 //endregion
 
 // region Extension functions for trailing lambda syntax

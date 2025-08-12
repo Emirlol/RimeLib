@@ -48,7 +48,7 @@ import kotlin.uuid.toJavaUuid
  *
  * The [color], [shadowColor], [clickEvent], [hoverEvent], [insertion] and [font] properties are presented as variables that can be get or set directly, and there are convenience methods to create [ClickEvent] and [HoverEvent] instances.
  */
-class StyleBuilder {
+class StyleBuilder() {
 	var color: Color? = null
 	var shadowColor: Color? = null
 	var clickEvent: ClickEvent? = null
@@ -138,6 +138,23 @@ class StyleBuilder {
 		get() {
 			decorations = decorations and 0b01111u
 		}
+
+	/**
+	 * Creates a new [StyleBuilder] with the same properties as the given [style].
+	 */
+	constructor(style: Style) : this() {
+		color = style.color?.let { Color(it.rgb) }
+		shadowColor = style.shadowColor?.let(::Color)
+		clickEvent = style.clickEvent
+		hoverEvent = style.hoverEvent
+		insertion = style.insertion
+		font = style.font
+		if (style.isBold) bold
+		if (style.isItalic) italic
+		if (style.isUnderlined) underlined
+		if (style.isStrikethrough) strikeThrough
+		if (style.isObfuscated) obfuscated
+	}
 
 	fun build(): Style = Style(
 		color?.value?.let { TextColor.fromRgb(it) },
