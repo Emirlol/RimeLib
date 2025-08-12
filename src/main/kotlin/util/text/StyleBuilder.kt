@@ -3,8 +3,11 @@
 package me.ancientri.rimelib.util.text
 
 import me.ancientri.rimelib.util.color.Color
+import net.minecraft.dialog.type.Dialog
 import net.minecraft.entity.EntityType
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtElement
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.*
 import net.minecraft.text.ClickEvent.*
 import net.minecraft.text.HoverEvent.*
@@ -193,6 +196,12 @@ class StyleBuilder {
 	inline fun suggestCommand(command: String): SuggestCommand = SuggestCommand(command)
 
 	/**
+	 * Convenience method for creating a [ClickEvent] that shows a dialog.
+	 * @param dialog The dialog to change to.
+	 */
+	inline fun showDialog(dialog: RegistryEntry<Dialog>) = ShowDialog(dialog)
+
+	/**
 	 * Convenience method for creating a [ClickEvent] that changes the page of a book.
 	 * @param page The page number to change to.
 	 */
@@ -209,6 +218,13 @@ class StyleBuilder {
 	 * @param text The text to copy.
 	 */
 	inline fun copyToClipboard(text: String): CopyToClipboard = CopyToClipboard(text)
+
+	/**
+	 * Convenience method for creating a [HoverEvent] that shows a custom click event.
+	 * @param id The id of the custom click event.
+	 * @param payload The payload of the custom click event.
+	 */
+	inline fun custom(id: Identifier, payload: NbtElement? = null): Custom = Custom(id, Optional.ofNullable(payload))
 
 	/**
 	 * Convenience method for creating a [HoverEvent] that shows text.
