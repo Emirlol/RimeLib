@@ -45,6 +45,7 @@ import kotlin.uuid.toJavaUuid
  *
  * The [color], [shadowColor], [clickEvent], [hoverEvent], [insertion] and [font] properties are presented as variables that can be get or set directly, and there are convenience methods to create [ClickEvent] and [HoverEvent] instances.
  */
+@TextDsl
 class StyleBuilder() {
 	var color: Color? = null
 	var shadowColor: Color? = null
