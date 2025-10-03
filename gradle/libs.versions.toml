@@ -15,6 +15,8 @@ mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annot
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
 kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet/releases/
 
+modPublish = "1.0.0" # https://github.com/modmuss50/mod-publish-plugin
+
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 yarnMappings = { module = "net.fabricmc:yarn", version.ref = "yarnMappings" }
@@ -42,4 +44,5 @@ kotlinpoet = [
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 loom = { id = "fabric-loom", version.ref = "loom" }
+modPublish = { id = "me.modmuss50.mod-publish-plugin", version.ref = "modPublish" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -5,6 +5,7 @@ plugins {
 	alias(libs.plugins.kotlin)
 	alias(libs.plugins.loom)
 	alias(libs.plugins.ksp)
+	alias(libs.plugins.modPublish)
 	`maven-publish`
 }
 
@@ -122,5 +123,22 @@ publishing {
 			version = project.version as String
 			from(components["java"])
 		}
+	}
+}
+
+publishMods {
+	file = tasks.remapJar.get().archiveFile
+	modLoaders.add("fabric")
+	type = STABLE
+	displayName = "RimeLib ${project.version}"
+
+	modrinth {
+		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+		projectId = "ayoldSYl"
+		minecraftVersions.addAll(libs.versions.minecraft.get())
+		requires("fabric-language-kotlin")
+		requires("fabric-api")
+		projectDescription = providers.fileContents(layout.projectDirectory.file("README.md")).asText
+		featured = true
 	}
 }
