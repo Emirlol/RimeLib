@@ -1,15 +1,15 @@
 [versions]
 # https://fabricmc.net/develop/
-minecraft = "1.21.8"
-yarnMappings = "1.21.8+build.1"
-fabricLoader = "0.16.14"
-fabricApi = "0.131.0+1.21.8"
+minecraft = "1.21.9"
+yarnMappings = "1.21.9+build.1"
+fabricLoader = "0.17.2"
+fabricApi = "0.134.0+1.21.9"
 
-fabricLanguageKotlin = "1.13.4+kotlin.2.2.0" # https://github.com/FabricMC/fabric-language-kotlin/releases
+fabricLanguageKotlin = "1.13.6+kotlin.2.2.20" # https://github.com/FabricMC/fabric-language-kotlin/releases
 
-kotlin = "2.2.0" # Match this to the one above
+kotlin = "2.2.20" # Match this to the one above
 loom = "1.11-SNAPSHOT" # https://github.com/FabricMC/fabric-loom/releases
-ksp = "2.2.0-2.0.2" #https://github.com/google/ksp/releases
+ksp = "2.2.20-2.0.3" # https://github.com/google/ksp/releases
 
 mcdev = "2.1.0" # https://central.sonatype.com/artifact/com.demonwav.mcdev/annotations
 pods4k = "0.7.0" # https://github.com/daniel-rusu/pods4k/releases
