@@ -55,7 +55,7 @@ class StyleBuilder() {
 	var clickEvent: ClickEvent? = null
 	var hoverEvent: HoverEvent? = null
 	var insertion: String? = null
-	var font: Identifier? = null
+	var font: StyleSpriteSource? = null
 
 	// bold, italic, underlined, strikethrough, obfuscated
 	private var decorations: UByte = 0b00000u
@@ -286,9 +286,4 @@ class StyleBuilder() {
 	 */
 	@OptIn(ExperimentalUuidApi::class)
 	inline fun showEntity(entityType: EntityType<*>, uuid: Uuid, name: Text? = null) = showEntity(entityType, uuid.toJavaUuid(), name)
-
-	companion object {
-		// The default font ID from Minecraft's Style class. Included for convenience.
-		inline val DEFAULT_FONT_ID: Identifier get() = Style.DEFAULT_FONT_ID
-	}
 }
