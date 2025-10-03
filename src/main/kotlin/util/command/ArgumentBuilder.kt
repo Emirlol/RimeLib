@@ -17,6 +17,7 @@ import java.util.function.Predicate
 
 inline fun <S : CommandSource> command(literal: String, block: LiteralArgumentBuilder<S>.() -> Unit): LiteralCommandNode<S> = LiteralArgumentBuilder<S>(literal).apply(block).build()
 
+@CommandDsl
 abstract class ArgumentBuilder<S> where S : CommandSource {
 	val root: RootCommandNode<S> = RootCommandNode<S>()
 	var command: Command<S>? = null

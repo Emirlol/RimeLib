@@ -57,6 +57,7 @@ import net.minecraft.util.Formatting
  * The infix methods [colored], [formatted] and [styled] delegate to the `text` methods for text creation **and then add the created text to the builder**;
  * whereas the unaryPlus operator `+` expects a created [Text] instance, and does not create the text itself.
  */
+@TextDsl
 class TextBuilder(
 	private val content: TextContent,
 	private val style: Style,
