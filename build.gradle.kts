@@ -131,6 +131,7 @@ publishMods {
 	modLoaders.add("fabric")
 	type = STABLE
 	displayName = "RimeLib ${project.version}"
+	changelog = ""
 
 	modrinth {
 		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
