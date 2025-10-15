@@ -18,7 +18,6 @@ import org.jetbrains.annotations.UnmodifiableView
  *
  * If you wish to modify the nbt, create a [copy][NbtCompound.copy] of the result instead.
  */
-@Suppress("CAST_NEVER_SUCCEEDS") // That's how accessors work, you dummy
 inline val NbtComponent.nbt get(): NbtCompound = (this as NbtComponentAccessor).nbt
 
 /**
