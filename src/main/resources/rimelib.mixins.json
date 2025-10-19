@@ -4,7 +4,8 @@
 	"package": "me.ancientri.rimelib.mixins",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"accessors.NbtComponentAccessor"
+		"accessors.NbtComponentAccessor",
+		"MessageHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
