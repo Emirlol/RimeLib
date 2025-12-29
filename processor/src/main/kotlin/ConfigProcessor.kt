@@ -62,7 +62,7 @@ class ConfigProcessor(private val environment: SymbolProcessorEnvironment) : Sym
 		val classSimpleName = configClass.simpleName.asString()
 		val generatedClassName = classSimpleName + "Builder"
 		codeGenerator
-			.createNewFile(Dependencies(false, ksFile!!), configClass.packageName.asString(), generatedClassName)
+			.createNewFile(Dependencies(true, ksFile!!), configClass.packageName.asString(), generatedClassName)
 			.bufferedWriter()
 			.use { writer ->
 				writer.append(
