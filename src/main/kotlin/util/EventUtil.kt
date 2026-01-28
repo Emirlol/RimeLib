@@ -21,7 +21,7 @@ object EventUtil {
 	 * @param T              The listener type.
 	 * @return The Event instance.
 	 */
-	inline fun <reified T> createArrayBacked(invokerFactory: Function<Array<T>, T>): Event<T> = EventFactory.createArrayBacked(T::class.java, invokerFactory)
+	inline fun <reified T: Any> createArrayBacked(invokerFactory: Function<Array<T>, T>): Event<T> = EventFactory.createArrayBacked(T::class.java, invokerFactory)
 
 	/**
 	 * Create an "array-backed" Event instance with a custom empty invoker,
@@ -41,7 +41,7 @@ object EventUtil {
 	 * @param T              The listener type.
 	 * @return The Event instance.
 	 */
-	inline fun <reified T> createArrayBacked(emptyInvoker: T, invokerFactory: Function<Array<T>, T>): Event<T> = EventFactory.createArrayBacked(T::class.java, emptyInvoker, invokerFactory)
+	inline fun <reified T: Any> createArrayBacked(emptyInvoker: T, invokerFactory: Function<Array<T>, T>): Event<T> = EventFactory.createArrayBacked(T::class.java, emptyInvoker, invokerFactory)
 
 	/**
 	 * Create an array-backed event with a list of default phases that get invoked in order.
@@ -62,5 +62,5 @@ object EventUtil {
 	 * @param T              The listener type.
 	 * @return The Event instance.
 	 */
-	inline fun <reified T> createWithPhases(invokerFactory: Function<Array<T>, T>, vararg defaultPhases: Identifier): Event<T> = EventFactory.createWithPhases(T::class.java, invokerFactory, *defaultPhases)
+	inline fun <reified T: Any> createWithPhases(invokerFactory: Function<Array<T>, T>, vararg defaultPhases: Identifier): Event<T> = EventFactory.createWithPhases(T::class.java, invokerFactory, *defaultPhases)
 }
