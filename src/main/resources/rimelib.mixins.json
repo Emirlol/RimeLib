@@ -5,7 +5,7 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"accessors.NbtComponentAccessor",
-		"MessageHandlerMixin"
+		"ChatListenerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

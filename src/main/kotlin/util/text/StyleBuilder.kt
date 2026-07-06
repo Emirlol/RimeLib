@@ -3,15 +3,15 @@
 package me.ancientri.rimelib.util.text
 
 import me.ancientri.rimelib.util.color.Color
-import net.minecraft.dialog.type.Dialog
-import net.minecraft.entity.EntityType
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtElement
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.text.*
-import net.minecraft.text.ClickEvent.*
-import net.minecraft.text.HoverEvent.*
-import net.minecraft.util.Identifier
+import net.minecraft.core.Holder
+import net.minecraft.nbt.Tag
+import net.minecraft.network.chat.*
+import net.minecraft.network.chat.ClickEvent.*
+import net.minecraft.network.chat.HoverEvent.*
+import net.minecraft.resources.Identifier
+import net.minecraft.server.dialog.Dialog
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStackTemplate
 import java.io.File
 import java.net.URI
 import java.nio.file.Path
@@ -55,7 +55,7 @@ class StyleBuilder() {
 	var clickEvent: ClickEvent? = null
 	var hoverEvent: HoverEvent? = null
 	var insertion: String? = null
-	var font: StyleSpriteSource? = null
+	var font: FontDescription? = null
 
 	// bold, italic, underlined, strikethrough, obfuscated
 	private var decorations: UByte = 0b00000u
@@ -144,7 +144,7 @@ class StyleBuilder() {
 	 * Creates a new [StyleBuilder] with the same properties as the given [style].
 	 */
 	constructor(style: Style) : this() {
-		color = style.color?.let { Color(it.rgb) }
+		color = style.color?.let { Color(it.value) }
 		shadowColor = style.shadowColor?.let(::Color)
 		clickEvent = style.clickEvent
 		hoverEvent = style.hoverEvent
@@ -217,7 +217,7 @@ class StyleBuilder() {
 	 * Convenience method for creating a [ClickEvent] that shows a dialog.
 	 * @param dialog The dialog to change to.
 	 */
-	inline fun showDialog(dialog: RegistryEntry<Dialog>) = ShowDialog(dialog)
+	inline fun showDialog(dialog: Holder<Dialog>) = ShowDialog(dialog)
 
 	/**
 	 * Convenience method for creating a [ClickEvent] that changes the page of a book.
@@ -242,13 +242,13 @@ class StyleBuilder() {
 	 * @param id The id of the custom click event.
 	 * @param payload The payload of the custom click event.
 	 */
-	inline fun custom(id: Identifier, payload: NbtElement? = null): Custom = Custom(id, Optional.ofNullable(payload))
+	inline fun custom(id: Identifier, payload: Tag? = null): Custom = Custom(id, Optional.ofNullable(payload))
 
 	/**
 	 * Convenience method for creating a [HoverEvent] that shows text.
 	 * @param text The text to show.
 	 */
-	inline fun showText(text: Text): ShowText = ShowText(text)
+	inline fun showText(text: Component): ShowText = ShowText(text)
 
 	/**
 	 * Convenience method for creating a [HoverEvent] that shows text.
@@ -266,7 +266,7 @@ class StyleBuilder() {
 	 * Convenience method for creating a [HoverEvent] that shows an item.
 	 * @param item The item to show.
 	 */
-	inline fun showItem(item: ItemStack): ShowItem = ShowItem(item)
+	inline fun showItem(item: ItemStackTemplate): ShowItem = ShowItem(item)
 
 	/**
 	 * Convenience method for creating a [HoverEvent] that shows an entity.
@@ -274,7 +274,7 @@ class StyleBuilder() {
 	 * @param uuid The uuid of the entity.
 	 * @param name The name of the entity.
 	 */
-	inline fun showEntity(entityType: EntityType<*>, uuid: UUID, name: Text? = null): ShowEntity = ShowEntity(EntityContent(entityType, uuid, name))
+	inline fun showEntity(entityType: EntityType<*>, uuid: UUID, name: Component? = null): ShowEntity = ShowEntity(EntityTooltipInfo(entityType, uuid, name))
 
 	/**
 	 * Convenience method for creating a [HoverEvent] that shows an entity.
@@ -285,5 +285,5 @@ class StyleBuilder() {
 	 * @param name The name of the entity.
 	 */
 	@OptIn(ExperimentalUuidApi::class)
-	inline fun showEntity(entityType: EntityType<*>, uuid: Uuid, name: Text? = null) = showEntity(entityType, uuid.toJavaUuid(), name)
+	inline fun showEntity(entityType: EntityType<*>, uuid: Uuid, name: Component? = null) = showEntity(entityType, uuid.toJavaUuid(), name)
 }

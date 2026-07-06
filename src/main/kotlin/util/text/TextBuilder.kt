@@ -4,12 +4,15 @@ package me.ancientri.rimelib.util.text
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import me.ancientri.rimelib.util.color.Color
-import me.ancientri.rimelib.util.color.ColorPalette
-import net.minecraft.text.*
-import net.minecraft.util.Formatting
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentContents
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.Style
+import net.minecraft.network.chat.contents.TranslatableContents
 
 /**
- * A low-overhead builder for creating [Text] instances with a fluent API.
+ * A low-overhead builder for creating [Component] instances with a fluent API.
  * The only extra overhead is the creation of a [TextBuilder] instance, everything else is inlined where possible.
  *
  * This builder allows you to create complex text structures with styles in a more concise way.
@@ -55,23 +58,23 @@ import net.minecraft.util.Formatting
  * but note the difference in method calls to create text with styles:
  *
  * The infix methods [colored], [formatted] and [styled] delegate to the `text` methods for text creation **and then add the created text to the builder**;
- * whereas the unaryPlus operator `+` expects a created [Text] instance, and does not create the text itself.
+ * whereas the unaryPlus operator `+` expects a created [Component] instance, and does not create the text itself.
  */
 @TextDsl
 class TextBuilder(
-	private val content: TextContent,
+	private val content: ComponentContents,
 	private val style: Style,
-	private val children: MutableList<Text> = ObjectArrayList()
+	private val children: MutableList<Component> = ObjectArrayList()
 ) {
 	/**
-	 * Creates a [TextBuilder] from an existing [Text] instance.
+	 * Creates a [TextBuilder] from an existing [Component] instance.
 	 */
-	constructor(text: Text) : this(text.content, text.style, text.siblings)
+	constructor(text: Component) : this(text.contents, text.style, text.siblings)
 
 	/**
-	 * Appends a child [Text] to [children].
+	 * Appends a child [Component] to [children].
 	 */
-	fun append(text: Text) {
+	fun append(text: Component) {
 		children += text
 	}
 
@@ -80,13 +83,13 @@ class TextBuilder(
 		return this@TextBuilder
 	}
 
-	inline operator fun Text.unaryPlus(): TextBuilder {
+	inline operator fun Component.unaryPlus(): TextBuilder {
 		append(this)
 		return this@TextBuilder
 	}
 
-	inline operator fun TextContent.unaryPlus(): TextBuilder {
-		append(MutableText.of(this))
+	inline operator fun ComponentContents.unaryPlus(): TextBuilder {
+		append(MutableComponent.create(this))
 		return this@TextBuilder
 	}
 
@@ -95,85 +98,85 @@ class TextBuilder(
 		return this
 	}
 
-	inline operator fun TextBuilder.plus(other: Text): TextBuilder {
+	inline operator fun TextBuilder.plus(other: Component): TextBuilder {
 		append(other)
 		return this
 	}
 
-	inline operator fun TextBuilder.plus(other: TextContent): TextBuilder {
-		append(MutableText.of(other))
+	inline operator fun TextBuilder.plus(other: ComponentContents): TextBuilder {
+		append(MutableComponent.create(other))
 		return this
 	}
 
 	/**
-	 * Adds a [Text] created from this [String] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [String] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param color The color to apply to the text.
 	 */
 	inline infix fun String.colored(color: Color) = colored(color.value)
 
 	/**
-	 * Adds a [Text] created from this [String] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [String] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param color The color to apply to the text.
 	 */
 	inline infix fun String.colored(color: Int) = append(this.text(color))
 
 	/**
-	 * Adds a [Text] created from this [String] with the [formatting] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [String] with the [formatting] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param formatting The formatting to apply to the text.
 	 */
-	inline infix fun String.formatted(formatting: Formatting) = append(this.text(formatting))
+	inline infix fun String.formatted(formatting: ChatFormatting) = append(this.text(formatting))
 
 	/**
-	 * Adds a [Text] created from this [String] with the [style] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [String] with the [style] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param style The style to apply to the text.
 	 */
 	inline infix fun String.styled(style: Style) = append(this.text(style))
 
 	/**
-	 * Adds a [Text] created from this [String] with the [builder][StyleBuilder] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [String] with the [builder][StyleBuilder] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param builder The style builder to apply to the text.
 	 */
 	inline infix fun String.styled(builder: StyleBuilder.() -> Unit) = styled(StyleBuilder().apply(builder).build())
 
 	/**
-	 * Adds a [Text] created from this [TranslatableTextContent] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [TranslatableContents] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param color The color to apply to the text.
 	 */
-	inline infix fun TranslatableTextContent.colored(color: Color) = colored(color.value)
+	inline infix fun TranslatableContents.colored(color: Color) = colored(color.value)
 
 	/**
-	 * Adds a [Text] created from this [TranslatableTextContent] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [TranslatableContents] with the [color] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param color The color to apply to the text.
 	 */
-	inline infix fun TranslatableTextContent.colored(color: Int) = append(MutableText(this, ObjectArrayList(), Style.EMPTY.withColor(color)))
+	inline infix fun TranslatableContents.colored(color: Int) = append(MutableComponent(this, ObjectArrayList(), Style.EMPTY.withColor(color)))
 
 	/**
-	 * Adds a [Text] created from this [TranslatableTextContent] with the [formatting] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [TranslatableContents] with the [formatting] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param formatting The formatting to apply to the text.
 	 */
-	inline infix fun TranslatableTextContent.formatted(formatting: Formatting) = append(MutableText(this, ObjectArrayList(), Style.EMPTY.withFormatting(formatting)))
+	inline infix fun TranslatableContents.formatted(formatting: ChatFormatting) = append(MutableComponent(this, ObjectArrayList(), Style.EMPTY.withColor(formatting)))
 
 	/**
-	 * Adds a [Text] created from this [TranslatableTextContent] with the [style] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [TranslatableContents] with the [style] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param style The style to apply to the text.
 	 */
-	inline infix fun TranslatableTextContent.styled(style: Style) = append(MutableText(this, ObjectArrayList(), style))
+	inline infix fun TranslatableContents.styled(style: Style) = append(MutableComponent(this, ObjectArrayList(), style))
 
 	/**
-	 * Adds a [Text] created from this [TranslatableTextContent] with the [builder][StyleBuilder] applied to this [TextBuilder]'s [children][TextBuilder.children].
+	 * Adds a [Component] created from this [TranslatableContents] with the [builder][StyleBuilder] applied to this [TextBuilder]'s [children][TextBuilder.children].
 	 *
 	 * @param builder The style builder to apply to the text.
 	 */
-	inline infix fun TranslatableTextContent.styled(builder: StyleBuilder.() -> Unit) = styled(StyleBuilder().apply(builder).build())
+	inline infix fun TranslatableContents.styled(builder: StyleBuilder.() -> Unit) = styled(StyleBuilder().apply(builder).build())
 
-	fun build(): MutableText = MutableText(content, children, style)
+	fun build(): MutableComponent = MutableComponent(content, children, style)
 }

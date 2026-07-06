@@ -3,7 +3,7 @@ package me.ancientri.rimelib.util.command
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.exceptions.CommandSyntaxException
-import net.minecraft.command.CommandSource
+import net.minecraft.commands.CommandSource
 
 object IncompleteCommand : Command<CommandSource> {
 	override fun run(context: CommandContext<CommandSource>): Int {

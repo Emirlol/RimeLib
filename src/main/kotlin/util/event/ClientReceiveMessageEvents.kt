@@ -2,7 +2,7 @@ package me.ancientri.rimelib.util.event
 
 import me.ancientri.rimelib.util.EventUtil
 import net.fabricmc.fabric.api.event.Event
-import net.minecraft.text.Text
+import net.minecraft.network.chat.Component
 import java.util.function.Consumer
 
 /**
@@ -14,7 +14,7 @@ object ClientReceiveMessageEvents {
 	 *
 	 * This will be fired even if the message is canceled by a mod.
 	 */
-	val ON_GAME_TEXT: Event<Consumer<Text>> = EventUtil.createArrayBacked { listeners ->
+	val ON_GAME_TEXT: Event<Consumer<Component>> = EventUtil.createArrayBacked { listeners ->
 		Consumer { text ->
 			for (listener in listeners) {
 				listener.accept(text)
@@ -40,7 +40,7 @@ object ClientReceiveMessageEvents {
 	 *
 	 * This will be fired even if the message is canceled by a mod.
 	 */
-	val ON_OVERLAY_TEXT: Event<Consumer<Text>> = EventUtil.createArrayBacked { listeners ->
+	val ON_OVERLAY_TEXT: Event<Consumer<Component>> = EventUtil.createArrayBacked { listeners ->
 		Consumer { text ->
 			for (listener in listeners) {
 				listener.accept(text)

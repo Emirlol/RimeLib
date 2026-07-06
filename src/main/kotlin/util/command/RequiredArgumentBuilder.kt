@@ -5,9 +5,8 @@ package me.ancientri.rimelib.util.command
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.suggestion.SuggestionProvider
 import com.mojang.brigadier.tree.ArgumentCommandNode
-import net.minecraft.command.CommandSource
 
-class RequiredArgumentBuilder<S, T>(private val name: String, private val type: ArgumentType<T>) : ArgumentBuilder<S>() where S : CommandSource {
+class RequiredArgumentBuilder<S, T>(private val name: String, private val type: ArgumentType<T>) : ArgumentBuilder<S>() {
 	var suggestionsProvider: SuggestionProvider<S>? = null
 
 	/**

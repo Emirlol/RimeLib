@@ -9,19 +9,18 @@ plugins {
 	`maven-publish`
 }
 
-group = properties["group"] as String
+group = property("group") as String
 version = if (hasProperty("snapshot")) {
-	"${properties["version"]}+${libs.versions.minecraft.get()}-SNAPSHOT"
+	"${property("version")}+${libs.versions.minecraft.get()}-SNAPSHOT"
 } else {
-	"${properties["version"]}+${libs.versions.minecraft.get()}"
+	"${property("version")}+${libs.versions.minecraft.get()}"
 }
 
 dependencies {
 	minecraft(libs.minecraft)
-	mappings(variantOf(libs.yarnMappings) { classifier("v2") })
-	modImplementation(libs.fabricLoader)
-	modImplementation(libs.fabricApi)
-	modImplementation(libs.fabricLanguageKotlin)
+	implementation(libs.fabricLoader)
+	implementation(libs.fabricApi)
+	implementation(libs.fabricLanguageKotlin)
 
 	compileOnly(libs.mcdev)
 	compileOnly(project(":annotations"))
@@ -59,7 +58,7 @@ allprojects {
 
 	plugins.withType<KotlinBasePlugin> {
 		extensions.configure<KotlinJvmProjectExtension> {
-			jvmToolchain(21)
+			jvmToolchain(25)
 		}
 	}
 }
@@ -69,9 +68,8 @@ loom {
 }
 
 base {
-	archivesName = properties["archives_base_name"] as String
+	archivesName = property("archives_base_name") as String
 }
-
 
 tasks {
 	processResources {
@@ -127,7 +125,7 @@ publishing {
 }
 
 publishMods {
-	file = tasks.remapJar.get().archiveFile
+	file = tasks.jar.get().archiveFile
 	modLoaders.add("fabric")
 	type = STABLE
 	displayName = "RimeLib ${project.version}"

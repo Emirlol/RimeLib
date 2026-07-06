@@ -3,12 +3,12 @@ package me.ancientri.rimelib.util
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.network.ClientPlayerEntity
+import net.minecraft.client.Minecraft
+import net.minecraft.client.player.LocalPlayer
 
-inline val client: MinecraftClient @Environment(EnvType.CLIENT) get() = MinecraftClient.getInstance()
+inline val client: Minecraft @Environment(EnvType.CLIENT) get() = Minecraft.getInstance()
 
-inline val player: ClientPlayerEntity? @Environment(EnvType.CLIENT) get() = client.player
+inline val player: LocalPlayer? @Environment(EnvType.CLIENT) get() = client.player
 
 /**
  * The Fabric Loader instance.

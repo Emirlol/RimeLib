@@ -7,9 +7,9 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.Event
-import net.minecraft.command.CommandSource
-import net.minecraft.server.command.CommandManager.RegistrationEnvironment
-import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.commands.CommandSource
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.Commands.CommandSelection
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
@@ -19,25 +19,25 @@ import kotlin.reflect.KClass
  *
  * Example usage:
  * ```kotlin
-  ClientCommandRegistrationCallback.EVENT.register("namespace") {
-      literal("example") {
-          literal("subcommand") {
-              executes {
-                  player?.sendText("This is a subcommand!".text(ColorPalette.TEXT))
-              }
-          }
-          argument("subcommand2", StringArgumentType.word()) {
-              executes {
-                  val argument: String by arguments()
-                  player?.sendText {
-                      "Hello " colored ColorPalette.TEXT
-                      argument colored ColorPalette.MAUVE
-                      "!" colored ColorPalette.TEXT
-                  }
-              }
-          }
-      }
-  }
+ * ClientCommandRegistrationCallback.EVENT.register("namespace") {
+ *     literal("example") {
+ *         literal("subcommand") {
+ *             executes {
+ *                 player?.sendText("This is a subcommand!".text(ColorPalette.TEXT))
+ *             }
+ *         }
+ *         argument("subcommand2", StringArgumentType.word()) {
+ *             executes {
+ *                 val argument: String by arguments()
+ *                 player?.sendText {
+ *                     "Hello " colored ColorPalette.TEXT
+ *                     argument colored ColorPalette.MAUVE
+ *                     "!" colored ColorPalette.TEXT
+ *                 }
+ *             }
+ *         }
+ *     }
+ * }
  * ```
  *
  * Which will result in the following commands:
@@ -55,7 +55,6 @@ inline fun Event<ClientCommandRegistrationCallback>.register(namespace: String, 
 	}
 }
 
-//TODO Make this doc code consistent with the server stuff, i.e. there is no `player` and it should be `source` instead.
 /**
  * Convenience method for registering a command.
  *
@@ -88,13 +87,13 @@ inline fun Event<ClientCommandRegistrationCallback>.register(namespace: String, 
  * - /namespace example &lt;subcommand2&gt;
  *
  * @param namespace The namespace for the command, which will be used as the root command.
- * @param environment The environment in which the command should be registered. Defaults to [RegistrationEnvironment.ALL].
+ * @param environment The environment in which the command should be registered. Defaults to [CommandSelection.ALL].
  * @param builder The command tree built using the [LiteralArgumentBuilder].
  */
 @Environment(EnvType.SERVER)
-inline fun Event<CommandRegistrationCallback>.register(namespace: String, environment: RegistrationEnvironment = RegistrationEnvironment.ALL, crossinline builder: LiteralArgumentBuilder<ServerCommandSource>.() -> Unit) {
+inline fun Event<CommandRegistrationCallback>.register(namespace: String, environment: CommandSelection = CommandSelection.ALL, crossinline builder: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit) {
 	register { dispatcher, _, env ->
-		if (environment == RegistrationEnvironment.ALL || environment == env)
+		if (environment == CommandSelection.ALL || environment == env)
 			dispatcher.root.addChild(command(namespace, builder))
 	}
 }

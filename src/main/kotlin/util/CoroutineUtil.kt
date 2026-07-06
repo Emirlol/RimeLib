@@ -3,7 +3,7 @@ package me.ancientri.rimelib.util
 import kotlinx.coroutines.*
 import me.ancientri.rimelib.RimeLib
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 import org.slf4j.Logger
 
 object CoroutineUtil {
@@ -26,7 +26,7 @@ object CoroutineUtil {
 		ClientLifecycleEvents.CLIENT_STOPPING.register(::exit)
 	}
 
-	private fun exit(client: MinecraftClient) {
+	private fun exit(client: Minecraft) {
 		LOGGER.info("Cancelling all coroutines.")
 		globalJob.cancel()
 	}

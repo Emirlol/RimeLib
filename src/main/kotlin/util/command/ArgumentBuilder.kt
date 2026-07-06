@@ -11,14 +11,13 @@ import com.mojang.brigadier.context.CommandContext
 import com.mojang.brigadier.tree.CommandNode
 import com.mojang.brigadier.tree.LiteralCommandNode
 import com.mojang.brigadier.tree.RootCommandNode
-import net.minecraft.command.CommandSource
 import java.util.*
 import java.util.function.Predicate
 
-inline fun <S : CommandSource> command(literal: String, block: LiteralArgumentBuilder<S>.() -> Unit): LiteralCommandNode<S> = LiteralArgumentBuilder<S>(literal).apply(block).build()
+inline fun <S> command(literal: String, block: LiteralArgumentBuilder<S>.() -> Unit): LiteralCommandNode<S> = LiteralArgumentBuilder<S>(literal).apply(block).build()
 
 @CommandDsl
-abstract class ArgumentBuilder<S> where S : CommandSource {
+abstract class ArgumentBuilder<S> {
 	val root: RootCommandNode<S> = RootCommandNode<S>()
 	var command: Command<S>? = null
 	var requirement: Predicate<S> = Predicates.alwaysTrue<S>()
