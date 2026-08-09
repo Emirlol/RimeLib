@@ -39,8 +39,8 @@ allprojects {
 		mavenCentral()
 		exclusiveContent {
 			forRepositories(
-				maven("https://ancientri.me/maven/releases") {
-					name = "AncientRime"
+				maven("https://maven.rimeorreason.org/releases") {
+					name = "RimeOrReason"
 				}
 			)
 			filter {
@@ -102,10 +102,10 @@ tasks {
 publishing {
 	repositories {
 		maven {
-			name = "AncientRime"
+			name = "RimeOrReason"
 			url = uri(
-				if (project.hasProperty("snapshot")) "https://ancientri.me/maven/snapshots"
-				else "https://ancientri.me/maven/releases"
+				if (project.hasProperty("snapshot")) "https://maven.rimeorreason.org/snapshots"
+				else "https://maven.rimeorreason.org/releases"
 			)
 			credentials(PasswordCredentials::class)
 			authentication {
