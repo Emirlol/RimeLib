@@ -86,7 +86,7 @@ value class Color(val value: Int) {
 		 * @receiver The Formatting to convert.
 		 * @return A Color instance representing the Formatting, or null if it is not a color.
 		 */
-		fun ChatFormatting.toColor(): Color? = if (this.isColor) Color(this.color!!) else null
+		fun ChatFormatting.toColor(): Color? = TextColor.fromLegacyFormat(this)?.toColor()
 
 		/**
 		 * Converts a Minecraft TextColor to a Color instance.
