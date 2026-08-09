@@ -15,7 +15,7 @@ maven("https://maven.rimeorreason.org/releases") {
 ```
 Add the dependency:
 ```kt
-modImplementation("me.ancientri:rimelib:$mod_version")
+implementation("me.ancientri:rimelib:$mod_version")
 ```
 You can also `include()` the jar if you don't want the user to download it manually.
 
