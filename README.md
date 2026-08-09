@@ -9,8 +9,8 @@ This mod doesn't do anything by itself but provides certain convenient ways of d
 
 Add the repository:
 ```kt
-maven("https://ancientri.me/maven/releases") {
-    name = "AncientRime"
+maven("https://maven.rimeorreason.org/releases") {
+    name = "RimeOrReason"
 }
 ```
 Add the dependency:
